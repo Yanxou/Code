@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>贪吃蛇</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#0f0f1a;min-height:100dvh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  font-family:'Segoe UI','PingFang SC',system-ui,sans-serif;
+  overscroll-behavior:none;touch-action:pan-y;
+  color:#e0e0e0;padding:12px;gap:12px
+}
+.game-container{
+  background:#1a1a2e;border-radius:16px;
+  padding:clamp(12px,4vw,24px);
+  box-shadow:0 8px 32px rgba(0,0,0,.5);
+  display:flex;flex-direction:column;
+  align-items:center;gap:16px;width:100%;max-width:440px
+}
+.header{width:100%;display:flex;justify-content:space-between;align-items:center}
+.header h1{
+  font-size:clamp(16px,4.5vw,20px);font-weight:600;letter-spacing:1px;
+  background:linear-gradient(135deg,#00d4aa,#00b4d8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.score-box{
+  background:#16213e;border-radius:8px;
+  padding:clamp(4px,1.5vw,8px) clamp(10px,3vw,16px);
+  font-size:clamp(13px,3.5vw,16px);font-weight:600;white-space:nowrap
+}
+.score-box span{color:#00d4aa}
+.canvas-wrapper{position:relative;width:100%;max-width:400px;aspect-ratio:1/1}
+canvas{
+  background:#0a0a1a;border-radius:clamp(6px,1.5vw,10px);
+  display:block;width:100%;height:100%;
+  image-rendering:pixelated;touch-action:none;cursor:pointer
+}
+.top-bar{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.top-bar button{
+  background:#16213e;color:#e0e0e0;border:1px solid #2a2a4a;
+  padding:clamp(6px,1.5vw,10px) clamp(12px,3vw,20px);
+  border-radius:8px;font-size:clamp(12px,3vw,14px);
+  font-weight:500;cursor:pointer;transition:background .15s,border-color .15s;
+  -webkit-tap-highlight-color:transparent
+}
+.top-bar button:active{background:#1e2a50;border-color:#00d4aa}
+.top-bar .hint{font-size:12px;color:#6a6a8a;display:none}
+.overlay{
+  position:absolute;inset:0;z-index:2;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  gap:clamp(8px,2vw,14px);background:rgba(0,0,0,.65);
+  border-radius:clamp(6px,1.5vw,10px);pointer-events:auto
+}
+.overlay.hidden{display:none;pointer-events:none}
+.overlay .title{font-size:clamp(22px,6vw,30px);font-weight:700}
+.overlay .sub{font-size:clamp(13px,3.5vw,15px);color:#9a9ab0}
+.overlay button{
+  background:#00d4aa;color:#0a0a1a;border:none;
+  padding:clamp(8px,2vw,12px) clamp(20px,5vw,32px);
+  border-radius:8px;font-size:clamp(14px,3.5vw,16px);
+  font-weight:600;cursor:pointer;
+  margin-top:clamp(2px,.5vw,4px);transition:background .15s,transform .1s;
+  -webkit-tap-highlight-color:transparent
+}
+.overlay button:active{background:#00e6b5;transform:scale(1.03)}
+.dpad{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr);
+  gap:clamp(4px,1vw,6px);
+  max-width:200px;width:100%;aspect-ratio:3/3;
+  user-select:none;-webkit-tap-highlight-color:transparent;touch-action:none
+}
+.dpad-btn{
+  background:#16213e;border:1px solid #2a2a4a;
+  border-radius:clamp(8px,2vw,12px);
+  color:#a0a0c0;font-size:clamp(18px,5vw,26px);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;touch-action:none
+}
+.dpad-btn:active{background:#1e2a50;border-color:#00d4aa;color:#00d4aa}
+.dpad-empty{visibility:hidden}
+.controls-row{width:100%;display:flex;justify-content:center}
+@media(hover:hover){
+  .top-bar button:hover{background:#1e2a50;border-color:#00d4aa}
+  .dpad-btn:hover{border-color:#3a3a6a}
+}
+@media(min-width:600px){
+  .dpad{display:none}
+  .top-bar .hint{display:inline}
+}
+</style>
+</head>
+<body>
+<div class="game-container">
+  <div class="header">
+    <h1>🐍 贪吃蛇</h1>
+    <div class="score-box">分数 <span id="score">0</span></div>
+  </div>
+  <div class="canvas-wrapper">
+    <canvas id="game" width="400" height="400"></canvas>
+    <div class="overlay" id="overlay">
+      <div class="title" id="overlay-title">🐍 贪吃蛇</div>
+      <div class="sub" id="overlay-sub">点击按钮或滑动开始</div>
+      <button id="overlay-btn">开始游戏</button>
+    </div>
+  </div>
+  <div class="controls-row">
+    <div class="dpad">
+      <div class="dpad-empty"></div>
+      <button class="dpad-btn" data-dir="up">▲</button>
+      <div class="dpad-empty"></div>
+      <button class="dpad-btn" data-dir="left">◀</button>
+      <div class="dpad-empty"></div>
+      <button class="dpad-btn" data-dir="right">▶</button>
+      <div class="dpad-empty"></div>
+      <button class="dpad-btn" data-dir="down">▼</button>
+      <div class="dpad-empty"></div>
+    </div>
+  </div>
+  <div class="top-bar">
+    <button id="restart-btn">↻ 重新开始</button>
+    <span class="hint">键盘 ↑↓←→ / WASD</span>
+  </div>
+</div>
+<script>
+(function(){
+  const c=document.getElementById('game'),ctx=c.getContext('2d');
+  const s=document.getElementById('score'),ov=document.getElementById('overlay');
+  const ot=document.getElementById('overlay-title'),os=document.getElementById('overlay-sub');
+  const ob=document.getElementById('overlay-btn'),rb=document.getElementById('restart-btn');
+  const db=document.querySelectorAll('.dpad-btn[data-dir]');
+  const G=20,SZ=400,CS=SZ/G,TI=150;
+  let sn,fd,dir,nd,sc,go,wn,pa,ti;
+
+  function i(){
+    sn=[{x:10,y:10},{x:9,y:10},{x:8,y:10}];
+    dir='right';nd='right';sc=0;go=false;wn=false;pa=true;
+    s.textContent='0';f();
+    ot.textContent='🐍 贪吃蛇';os.textContent='点击按钮或滑动开始';
+    ov.classList.remove('hidden');ob.textContent='开始游戏';
+  }
+  function f(){
+    const o=new Set(sn.map(p=>`${p.x},${p.y}`)),fr=[];
+    for(let i=0;i<G;i++)for(let j=0;j<G;j++)if(!o.has(`${i},${j}`))fr.push({x:i,y:j});
+    if(!fr.length){wn=true;go=true;return}
+    fd=fr[Math.floor(Math.random()*fr.length)];
+  }
+  function scn(){
+    const r=c.getBoundingClientRect(),d=window.devicePixelRatio||1;
+    const w=r.width*d,h=r.height*d;
+    if(c.width!==w||c.height!==h){c.width=w;c.height=h;ctx.setTransform(w/SZ,0,0,h/SZ,0,0)}
+  }
+  function d(){
+    scn();ctx.clearRect(0,0,SZ,SZ);
+    ctx.strokeStyle='#16162a';ctx.lineWidth=.5;
+    for(let i=0;i<=G;i++){
+      ctx.beginPath();ctx.moveTo(i*CS,0);ctx.lineTo(i*CS,SZ);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(0,i*CS);ctx.lineTo(SZ,i*CS);ctx.stroke();
+    }
+    sn.forEach((e,i)=>{
+      const r=1-i/sn.length*.4;
+      ctx.fillStyle=`rgb(0,${Math.round(190*r)},${Math.round(210*r+45)})`;
+      const p=i===0?0:2,rr=i===0?4:2.5;
+      rx(ctx,e.x*CS+p/2,e.y*CS+p/2,CS-p,CS-p,rr);
+    });
+    const h=sn[0],sx=h.x*CS,sy=h.y*CS;ctx.fillStyle='#fff';
+    if(dir==='right'){ctx.fillRect(sx+13,sy+5,3,3);ctx.fillRect(sx+13,sy+12,3,3);}
+    else if(dir==='left'){ctx.fillRect(sx+4,sy+5,3,3);ctx.fillRect(sx+4,sy+12,3,3);}
+    else if(dir==='up'){ctx.fillRect(sx+5,sy+4,3,3);ctx.fillRect(sx+12,sy+4,3,3);}
+    else{ctx.fillRect(sx+5,sy+13,3,3);ctx.fillRect(sx+12,sy+13,3,3);}
+    const p=Math.sin(Date.now()/200)*.1+.9;
+    ctx.save();ctx.translate(fd.x*CS+10,fd.y*CS+10);ctx.scale(p,p);
+    ctx.fillStyle='#ff3b5c';ctx.shadowColor='#ff3b5c';ctx.shadowBlur=8;
+    ctx.beginPath();ctx.arc(0,0,8,0,Math.PI*2);ctx.fill();ctx.restore();
+  }
+  function rx(xx,yy,w,h,r){
+    ctx.beginPath();ctx.moveTo(xx+r,yy);ctx.lineTo(xx+w-r,yy);ctx.quadraticCurveTo(xx+w,yy,xx+w,yy+r);
+    ctx.lineTo(xx+w,yy+h-r);ctx.quadraticCurveTo(xx+w,yy+h,xx+w-r,yy+h);
+    ctx.lineTo(xx+r,yy+h);ctx.quadraticCurveTo(xx,yy+h,xx,yy+h-r);
+    ctx.lineTo(xx,yy+r);ctx.quadraticCurveTo(xx,yy,xx+r,yy);
+    ctx.closePath();ctx.fill();
+  }
+  function t(){
+    if(go||pa)return;
+    dir=nd;const h={x:sn[0].x,y:sn[0].y};
+    if(dir==='up')h.y--;else if(dir==='down')h.y++;else if(dir==='left')h.x--;else h.x++;
+    if(h.x<0||h.x>=G||h.y<0||h.y>=G){eg('撞墙了...');return}
+    if(sn.some(e=>e.x===h.x&&e.y===h.y)){eg('咬到自己了');return}
+    sn.unshift(h);
+    if(h.x===fd.x&&h.y===fd.y){sc++;s.textContent=sc;f();if(wn){eg('你赢了！🎉',1);return}}
+    else sn.pop();
+    d();
+  }
+  function eg(m,w){
+    go=1;clearInterval(ti);
+    ot.textContent=w?'🎉 恭喜通关！':'💀 游戏结束';
+    os.textContent=m+` 得分：${sc}`;
+    ov.classList.remove('hidden');ob.textContent='再来一局';d();
+  }
+  function st(){
+    clearInterval(ti);i();d();pa=0;ov.classList.add('hidden');ti=setInterval(t,TI);
+  }
+  function sd(d){
+    const o={up:'down',down:'up',left:'right',right:'left'};
+    if(d!==o[dir])nd=d;if(pa&&!go)st();
+  }
+  document.addEventListener('keydown',e=>{
+    const m={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',
+      w:'up',s:'down',a:'left',d:'right',W:'up',S:'down',A:'left',D:'right'};
+    if(m[e.key]){e.preventDefault();sd(m[e.key])}
+  });
+  db.forEach(b=>{b.addEventListener('pointerdown',e=>{e.preventDefault();sd(b.dataset.dir)})});
+  let ts=null;
+  const ts1=e=>{const t=e.touches[0];ts={x:t.clientX,y:t.clientY}};
+  const ts2=e=>{
+    if(!ts)return;const t=e.changedTouches[0],dx=t.clientX-ts.x,dy=t.clientY-ts.y;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>15)sd(dx>0?'right':'left');
+    else if(Math.abs(dy)>15)sd(dy>0?'down':'up');ts=null;
+  };
+  c.addEventListener('touchstart',ts1,{passive:1});c.addEventListener('touchend',ts2,{passive:1});
+  window.addEventListener('resize',scn);
+  ob.addEventListener('pointerdown',e=>e.preventDefault());
+  ob.addEventListener('click',st);
+  rb.addEventListener('pointerdown',e=>e.preventDefault());
+  rb.addEventListener('click',()=>{clearInterval(ti);i();d();pa=1;
+    ov.classList.remove('hidden');ot.textContent='🐍 贪吃蛇';
+    os.textContent='点击按钮或滑动开始';ob.textContent='开始游戏'});
+  function pl(){if(!go)d();requestAnimationFrame(pl)}
+  i();scn();d();pl();
+})();
+</script>
+</body>
+</html>
