@@ -2,123 +2,120 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yanxou · 小项目集</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Yanxou · 个人小站</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: #0b0b14;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Segoe UI', 'PingFang SC', system-ui, -apple-system, sans-serif;
-    color: #e0e0e0;
-    padding: 24px;
-  }
-  .container {
-    max-width: 560px;
-    width: 100%;
-  }
-  h1 {
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 6px;
-    letter-spacing: -0.02em;
-  }
-  .subtitle {
-    color: #6a6a8a;
-    font-size: 14px;
-    margin-bottom: 32px;
-  }
-  .projects {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .card {
-    background: #14141f;
-    border-radius: 12px;
-    padding: 20px 24px;
-    text-decoration: none;
-    color: inherit;
-    border: 1px solid #1e1e30;
-    transition: background 0.15s, border-color 0.15s, transform 0.1s;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .card:hover {
-    background: #1a1a2e;
-    border-color: #00d4aa;
-    transform: translateY(-1px);
-  }
-  .card-icon {
-    font-size: 32px;
-    flex-shrink: 0;
-    width: 48px;
-    text-align: center;
-  }
-  .card-body h2 {
-    font-size: 17px;
-    font-weight: 500;
-    margin-bottom: 3px;
-  }
-  .card-body p {
-    font-size: 13px;
-    color: #6a6a8a;
-  }
-  .card-body .tag {
-    display: inline-block;
-    font-size: 11px;
-    background: #00d4aa18;
-    color: #00d4aa;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-top: 6px;
-  }
-  footer {
-    margin-top: 40px;
-    text-align: center;
-    font-size: 12px;
-    color: #4a4a6a;
-  }
-  footer a { color: #6a6a8a; text-decoration: none; }
-  footer a:hover { color: #00d4aa; }
+:root{
+  --bg:#faf9f6;--card:#fff;--fg:#1a1a2e;--mute:#8888a0;
+  --border:#e8e6e0;--accent:#2d9f8b;--accent-soft:#e6f5f1;
+  --radius:12px;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04)
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:'Inter','Noto Sans SC',system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.6
+}
+.container{max-width:620px;margin:0 auto;padding:48px 20px 64px}
+header{text-align:center;margin-bottom:48px}
+.avatar{
+  width:72px;height:72px;border-radius:50%;margin:0 auto 16px;
+  background:var(--accent-soft);color:var(--accent);
+  font-size:32px;display:flex;align-items:center;justify-content:center
+}
+h1{font-size:26px;font-weight:600;letter-spacing:-.02em}
+.tagline{color:var(--mute);font-size:14px;margin-top:4px}
+.bio{
+  color:var(--mute);font-size:14px;max-width:440px;margin:16px auto 0;
+  line-height:1.7
+}
+section{margin-bottom:40px}
+section h2{
+  font-size:14px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--mute);margin-bottom:16px
+}
+.project-grid{display:flex;flex-direction:column;gap:12px}
+.project-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:18px 20px;
+  display:flex;align-items:center;gap:14px;
+  text-decoration:none;color:inherit;
+  box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s
+}
+.project-card:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(45,159,139,.1)}
+.project-icon{font-size:28px;flex-shrink:0;width:44px;text-align:center}
+.project-info h3{font-size:15px;font-weight:500}
+.project-info p{font-size:13px;color:var(--mute);margin-top:2px}
+.project-tag{
+  display:inline-block;font-size:11px;font-weight:500;
+  color:var(--accent);background:var(--accent-soft);
+  padding:2px 8px;border-radius:4px;margin-top:5px
+}
+.post-list{display:flex;flex-direction:column;gap:10px}
+.post-item{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px 20px;
+  text-decoration:none;color:inherit;
+  box-shadow:var(--shadow);transition:border-color .15s
+}
+.post-item:hover{border-color:var(--accent)}
+.post-item h3{font-size:14px;font-weight:500}
+.post-item .meta{font-size:12px;color:var(--mute);margin-top:4px}
+footer{text-align:center;padding-top:16px;border-top:1px solid var(--border)}
+footer a{color:var(--mute);text-decoration:none;font-size:13px;margin:0 10px}
+footer a:hover{color:var(--accent)}
+@media(max-width:480px){
+  .container{padding:32px 16px 48px}
+  h1{font-size:22px}
+  .avatar{width:64px;height:64px;font-size:28px}
+  .project-card{padding:14px 16px}
+  .post-item{padding:14px 16px}
+}
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>Yanxou · 小项目集</h1>
-  <p class="subtitle">全静态前端小游戏，部署在 Vercel 上</p>
-  <div class="projects">
-    <a href="/codex-tutorial/demo/" class="card">
-      <div class="card-icon">🃏</div>
-      <div class="card-body">
-        <h2>记忆翻牌</h2>
-        <p>4×4 动物 Emoji 配对游戏，毛玻璃质感 UI</p>
-        <span class="tag">Codex 演示项目</span>
-      </div>
-    </a>
-    <a href="/snake-game/" class="card">
-      <div class="card-icon">🐍</div>
-      <div class="card-body">
-        <h2>贪吃蛇</h2>
-        <p>20×20 网格，渐变蛇身脉冲食物，触屏支持</p>
-        <span class="tag">Canvas 经典</span>
-      </div>
-    </a>
-    <a href="/codex-tutorial/" class="card" style="opacity:0.65" target="_blank">
-      <div class="card-icon">📘</div>
-      <div class="card-body">
-        <h2>Codex 完全入门指南</h2>
-        <p>面向国内开发者的 Codex 安装与配置教程</p>
-        <span class="tag">README</span>
-      </div>
-    </a>
-  </div>
+  <header>
+    <div class="avatar">🐧</div>
+    <h1>Yanxou</h1>
+    <p class="tagline">写写代码，折腾点好玩的东西</p>
+    <p class="bio">一个自学编程的开发者，喜欢做小游戏和小工具。<br>这里记录我折腾过的东西。</p>
+  </header>
+
+  <section>
+    <h2>项目</h2>
+    <div class="project-grid">
+      <a href="/snake-game/" class="project-card">
+        <div class="project-icon">🐍</div>
+        <div class="project-info">
+          <h3>贪吃蛇</h3>
+          <p>20×20 网格，渐变蛇身，脉冲食物，手机 D-pad 触控</p>
+          <span class="project-tag">Canvas 经典</span>
+        </div>
+      </a>
+      <a href="/codex-tutorial/demo/" class="project-card">
+        <div class="project-icon">🃏</div>
+        <div class="project-info">
+          <h3>记忆翻牌</h3>
+          <p>8 对 Emoji 配对，翻牌动画，计时计步</p>
+          <span class="project-tag">Codex 演示</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>文章</h2>
+    <div class="post-list">
+      <a href="/codex-tutorial/" class="post-item">
+        <h3>Codex 完全入门指南</h3>
+        <p class="meta">从安装到实战 · 面向国内开发者</p>
+      </a>
+    </div>
+  </section>
+
   <footer>
     <a href="https://github.com/yanxou">GitHub</a>
   </footer>
