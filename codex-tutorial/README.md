@@ -515,7 +515,28 @@ codex-tutorial/demo/index.html
 
 ---
 
-## 更多实用教程 / 参考博客
+## 
+
+## 九、部署与国内访问
+
+### Vercel（默认方案）
+
+本项目部署在 Vercel，但 **Vercel 在国内部分地区访问慢甚至无法打开**。
+
+### GitHub Pages（国内推荐）
+
+GitHub Pages 是 GitHub 自带的静态托管，国内直连，访问比 Vercel 稳定。
+
+启用方法：
+1. 打开仓库 **Settings → Pages**
+2. 在 Source 处选择 **GitHub Actions**
+3. 已配置好的 .github/workflows/deploy-pages.yml 会在每次推送时自动部署
+4. 访问：https://yanxou.github.io/Code/
+
+---
+
+
+更多实用教程 / 参考博客
 
 以下是一些优秀的个人技术博客，涵盖 AI 编程、前端开发和工具链配置，值得收藏：
 

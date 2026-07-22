@@ -57,6 +57,7 @@ footer a{color:var(--accent);text-decoration:none}
     <a href="#api">四、接入 DeepSeek API</a>
     <a href="#config">五、基础配置</a>
     <a href="#start">六、第一次使用</a>
+    <a href="#deploy">七、部署与国内访问</a>
   </div>
 
   <section id="intro">
@@ -238,3 +239,41 @@ footer a{color:var(--accent);text-decoration:none}
 </div>
 </body>
 </html>
+  <section id="deploy">
+    <h2>七、部署与国内访问</h2>
+    <p>你的小项目做好后，需要部署到线上才能分享给别人。这里有两种方案：</p>
+
+    <h3>方案 A：Vercel（国际用户推荐）</h3>
+    <p>本项目的默认部署平台。速度快、配置简单，但<strong>国内部分地区访问不稳定</strong>。</p>
+
+    <h3>方案 B：GitHub Pages（国内用户推荐）</h3>
+    <p>GitHub 提供的免费静态托管，国内访问比 Vercel 更稳定。</p>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <p>打开你的 GitHub 仓库 <strong>Settings → Pages</strong></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <p>在「Source」处选择 <strong>GitHub Actions</strong></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <p>推送到 <code>main</code> 分支后，仓库中已配好的 <code>.github/workflows/deploy-pages.yml</code> 会自动构建并部署</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <p>部署完成后访问 <code>https://yanxou.github.io/Code/</code> 即可</p>
+      </div>
+    </div>
+    <div class="highlight">
+      <p>💡 GitHub Pages 国内直连，不需要任何工具。访问速度取决于当地网络，通常比 Vercel 流畅。</p>
+    </div>
+  </section>
+  </section>
