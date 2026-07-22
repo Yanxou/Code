@@ -117,9 +117,9 @@ footer a{color:var(--accent);text-decoration:none}
     <h2>三、网络配置</h2>
     <p>Codex 默认需要访问 OpenAI 的服务器。国内用户有以下几种选择：</p>
 
-    <h3>方案 A：使用 Watt Toolkit（推荐新手）</h3>
-    <p>这是最简单的方案，有图形界面，点几下鼠标就行。</p>
-    <div class="step">
+    <h3>先装 Watt Toolkit（加速 GitHub）</h3>
+    <p>Watt Toolkit 只能加速 GitHub 访问，不能加速 OpenAI API。</p>
+<div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
         <p>打开 <a href="https://steampp.net" target="_blank">steampp.net</a>，下载 Watt Toolkit（原名 Steam++）</p>
@@ -134,19 +134,22 @@ footer a{color:var(--accent);text-decoration:none}
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-body">
-        <p>勾选 <strong>GitHub</strong> 和 <strong>OpenAI</strong>，点击「一键加速」</p>
+        <p>勾选 <strong>GitHub</strong>，点击「一键加速」</p>
       </div>
     </div>
     <div class="highlight">
-      <p>✅ 完成！Watt Toolkit 会自动配置好网络，Codex 就能连上 OpenAI 了。</p>
+      <p>✅ 完成！GitHub 访问快了，可用来下载 ccswitch 等工具。</p>
     </div>
 
-    <h3>方案 B：通过中转 API（无需梯子）</h3>
-    <p>如果你不想折腾网络工具，可以直接让 Codex 通过国内中转服务访问 AI 模型。</p>
-    <p><strong>最推荐的方式：直接使用 DeepSeek API（见下一节）</strong>，国内直连，速度飞快。</p>
+    <h3>方案 A：通过 GPT 中转 API</h3>
+    <p>国内有很多服务商提供 OpenAI API 的中转服务。你付费买额度，他们帮你转发到 OpenAI。</p>
     <div class="highlight">
-      <p>💡 如果你有 CC-switch 或其他第三方中转站，只需在配置中修改 <code>base_url</code> 指向你的中转地址即可。</p>
+      <p>💡 在中转服务商那拿到中转地址和 Key 后，用 <code>codex config set openai-base-url 你的地址</code> 配置即可。</p>
     </div>
+
+    <h3>方案 B：直接使用 DeepSeek API（推荐）</h3>
+    <p>DeepSeek 是国产大模型，国内直连，不需任何代理。价格是 GPT 的几十分之一。</p>
+    <p><strong>具体操作见下一节。</strong></p>
   </section>
 
   <section id="api">
