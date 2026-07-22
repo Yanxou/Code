@@ -50,69 +50,78 @@ graph TD
 
 ---
 
-## 二、环境准备：搞定国内网络
+## 二、下载 CC-switch（API 路由管理器）
 
-在正式安装之前，先解决网络问题。以下是两种推荐方案：
+### 什么是 CC-switch
 
-### 方案 A：CC-switch（路由级转发）
+CC-switch 是一个 API 路由管理工具。它不提供翻墙功能，而是管理已有的代理流量：
+- 哪些域名走代理（如 OpenAI）
+- 哪些域名直连（如 DeepSeek）
 
-[CC-switch](https://github.com/CC-switch/CC-switch) 是一款轻量级的智能路由转发工具，专门优化了开发场景的流量：
+### 下载 CC-switch
 
-**安装与配置：**
+从 GitHub Release 下载对应系统版本，解压即用。
 
-```bash
-# 通过 npm 安装
-npm install -g cc-switch
+### Watt Toolkit（仅加速 GitHub）
 
-# 启动路由转发
-cc-switch start
-```
+Watt Toolkit 只能加速 GitHub，不能加速 OpenAI。下载 CC-switch 时可以用它：
+1. 官网下载安装包
+2. 进入「网络加速」勾选 GitHub，一键加速
 
-```mermaid
-graph LR
-    A[你的电脑] --> B[CC-switch<br>本地路由转发]
-    B --> C[GitHub API]
-    B --> D[OpenAI API]
-    B --> E[NPM 源]
-    B --> F[其他开发服务]
-    C --> G[国内直连<br>或优化线路]
-    D --> G
-    E --> G
-```
-
-CC-switch 的核心优势是**按需转发** — 只路由开发相关的流量，不影响日常上网。配置文件的典型结构如下：
+### CC-switch 配置
 
 ```yaml
-# ~/.cc-switch/config.yaml
 routes:
   - domain: "github.com"
     proxy: auto
   - domain: "*.openai.com"
     proxy: auto
-  - domain: "registry.npmjs.org"
-    proxy: direct
   - domain: "*.deepseek.com"
     proxy: direct
 ```
 
-### 方案 B：Watt Toolkit（系统级加速）
-
-[Watt Toolkit](https://github.com/BeyondDimension/SteamTools)（原名 Steam++）是国内开发者非常熟悉的网络加速工具，支持 GitHub、Steam、NPM 等多种服务：
-
-**下载与配置：**
-
-1. 从 [Watt Toolkit 官网](https://steampp.net/) 下载安装包
-2. 安装后打开，进入 **「网络加速」** 标签页
-3. 勾选需要加速的服务：
-   - [x] GitHub
-   - [x] NPM/Node.js
-4. 点击 **「一键加速」** 即可
-
-> 小贴士：Watt Toolkit 免费版已足够日常使用。建议和 CC-switch 搭配，以 Watt Toolkit 为基础全局加速，CC-switch 做精细化路由控制。
-
 ---
 
 ## 三、安装 Codex
+
+
+### 从微软商店安装（推荐）
+
+打开微软商店，搜索 Codex，点击安装。不需要 Node.js。
+
+### 通过终端安装
+
+如果习惯命令行，先装 Node.js（官网下载 LTS 版），然后：
+
+```bash
+npm install -g @openai/codex
+```
+
+验证安装：
+
+```bash
+codex --version
+```
+
+
+### 从微软商店安装（推荐）
+
+打开微软商店，搜索 Codex，点击安装。不需要 Node.js。
+
+### 通过终端安装
+
+如果习惯命令行，先装 Node.js（官网下载 LTS 版），然后：
+
+```bash
+npm install -g @openai/codex
+```
+
+验证安装：
+
+```bash
+codex --version
+```
+
 
 ### 3.1 安装前置条件
 
@@ -140,7 +149,7 @@ npm install -g @openai/codex
 codex --version
 ```
 
-如果网络不通，请确保前一步的 CC-switch 或 Watt Toolkit 正在运行。
+如果网络不通，检查 CC-switch 是否已启动。
 
 ### 3.3 首次启动
 
@@ -175,106 +184,7 @@ Codex 的每个工作单元叫一个 **thread（线程）**，类似于一次对
 
 ---
 
-## 四、配置 CC-switch 路由转发
-
-经过前面的安装，你可能已经接触到了 CC-switch。这一节我们深入配置它，让开发体验更流畅。
-
-### 4.1 配置文件详解
-
-CC-switch 的配置文件位于 `~/.cc-switch/config.yaml`，一个更完整的配置示例：
-
-```yaml
-# ~/.cc-switch/config.yaml
-port: 1080
-socks_port: 1081
-log_level: info
-
-rules:
-  - pattern: "github.com"
-    proxy: true
-  - pattern: "raw.githubusercontent.com"
-    proxy: true
-  - pattern: "*.openai.com"
-    proxy: true
-  - pattern: "*.deepseek.com"
-    proxy: false
-  - pattern: "*.aliyun.com"
-    proxy: false
-  - pattern: "registry.npmmirror.com"
-    proxy: false
-  - pattern: "registry.npmjs.org"
-    mirror: "https://registry.npmmirror.com"
-```
-
-### 4.2 配置终端代理
-
-为了让 Codex 在终端中也能访问 GitHub，需要配置终端代理环境变量：
-
-**Windows PowerShell：**
-```powershell
-\$env:HTTP_PROXY="http://127.0.0.1:1080"
-\$env:HTTPS_PROXY="http://127.0.0.1:1080"
-```
-
-**Mac / Linux：**
-```bash
-export HTTP_PROXY="http://127.0.0.1:1080"
-export HTTPS_PROXY="http://127.0.0.1:1080"
-```
-
-### 4.3 验证网络连通性
-
-配置完成后，验证网络是否通畅：
-
-```bash
-# 测试 GitHub
-curl -I https://github.com
-
-# 测试 OpenAI
-curl -I https://api.openai.com
-
-# 测试 DeepSeek（应该直连）
-curl -I https://api.deepseek.com
-```
-
----
-
-## 五、Watt Toolkit 深度配置：GitHub 加速
-
-Watt Toolkit 提供了开箱即用的加速能力，但有一些高级配置能让体验更好。
-
-### 5.1 推荐的加速项
-
-在 Watt Toolkit 的「网络加速」页面，推荐勾选以下服务：
-
-| 服务 | 加速原因 | 推荐度 |
-| --- | --- | --- |
-| GitHub | 代码仓库访问、下载 | 必选 |
-| NPM | 包管理器下载 | 推荐 |
-| Pip | Python 包管理 | 可选 |
-| NuGet | .NET 包管理 | 可选 |
-
-### 5.2 设置系统代理模式
-
-Watt Toolkit 支持「系统代理」模式，开启后会自动配置系统级代理：
-
-1. 在 Watt Toolkit 设置中开启 **「系统代理」**
-2. 代理地址：`127.0.0.1:1080`（与 CC-switch 保持一致）
-3. 勾选 **「开机自启」** 省去手动启动的麻烦
-
-### 5.3 常见问题
-
-**Q：Watt Toolkit 和 CC-switch 冲突吗？**
-
-不冲突。两者可以同时运行：Watt Toolkit 负责全局系统代理，CC-switch 负责开发流量的精细化路由。CC-switch 的规则优先级更高。
-
-**Q：GitHub 下载还是很慢？**
-
-可以尝试在 Watt Toolkit 中开启 **「GitHub 镜像加速」** 选项，会自动使用国内 CDN 节点。
-
----
-
-## 六、接入 codex++ 与 DeepSeek API
+## 四、接入 codex++ 与 DeepSeek API
 
 这是很多开发者最关心的一节。**codex++** 是对 Codex 功能的增强扩展，而 **DeepSeek API** 则提供了国内可直连的高性价比大模型接入方式。
 
@@ -376,7 +286,7 @@ codex
 
 ---
 
-## 七、实战：用 Codex 做一个记忆翻牌游戏
+## 五、实战：用 Codex 做一个记忆翻牌游戏
 
 理论说完了，我们来点实际的。下面是用 Codex 构建的一个 **简约美观的记忆翻牌小游戏**。
 
@@ -477,7 +387,7 @@ codex-tutorial/demo/index.html
 
 ---
 
-## 八、总结与最佳实践
+## 六、总结与最佳实践
 
 ### 8.1 安装配置速查表
 
@@ -485,7 +395,7 @@ codex-tutorial/demo/index.html
 | --- | --- | --- |
 | 1 | Watt Toolkit | 加速 GitHub 访问 |
 | 2 | CC-switch | 精细化路由转发 |
-| 3 | npm install -g @openai/codex | 安装 Codex |
+| 3 | 微软商店搜索 Codex 安装 / npm install -g @openai/codex | 安装 Codex |
 | 4 | DeepSeek 注册获取 API Key | 获取国内可用的 AI 模型 |
 | 5 | npm install -g codex-plus | 安装增强插件 |
 | 6 | codex++ init + 配置 DeepSeek | 对接国内模型 |
@@ -515,9 +425,7 @@ codex-tutorial/demo/index.html
 
 ---
 
-## 
-
-## 九、部署与国内访问
+## 七、部署与国内访问
 
 ### Vercel（默认方案）
 

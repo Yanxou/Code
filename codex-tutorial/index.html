@@ -72,89 +72,69 @@ footer a{color:var(--accent);text-decoration:none}
 
   <section id="install">
     <h2>二、下载安装 Codex</h2>
-    <p>下面是最简单的安装方式，尽量避开命令行操作。</p>
+    <p>推荐直接从微软商店安装，完全不需要命令行。</p>
 
-    <h3>第一步：安装 Node.js</h3>
-    <p>Codex 需要 Node.js 运行环境。把它当成一个"底座"就好：</p>
+    <h3>从微软商店安装（推荐新手）</h3>
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body">
-        <p>打开 <a href="https://nodejs.org" target="_blank">nodejs.org</a>，下载 LTS 版本的安装包（左侧那个）</p>
-      </div>
+      <div class="step-body"><p>打开 Windows 微软商店，搜索 <strong>Codex</strong></p></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body">
-        <p>双击安装包，一路点「Next」安装完成</p>
-      </div>
+      <div class="step-body"><p>点击「安装」，等待完成。不需要装 Node.js。</p></div>
+    </div>
+
+    <h3>通过终端安装（需要 Node.js）</h3>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body"><p>打开 <a href="https://nodejs.org" target="_blank">nodejs.org</a>，下载 LTS 版安装</p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body"><p>双击安装，一路下一步</p></div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-body">
-        <p>打开终端（Windows 按 Win+R，输入 <code>cmd</code> 回车），输入以下命令验证：</p>
-        <div class="code">node --version</div>
-        <p>如果显示 <code>v18.x.x</code> 之类的版本号，说明安装成功。</p>
-      </div>
+      <div class="step-body"><p>在终端运行：<code>npm install -g @openai/codex</code></p></div>
     </div>
+  <h2>三、网络配置</h2>
 
-    <h3>第二步：安装 Codex</h3>
+    <h3>先装 Watt Toolkit（加速 GitHub 下载）</h3>
+    <p>Watt Toolkit 只能加速 GitHub 访问，<strong>不能加速 OpenAI API</strong>。</p>
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body">
-        <p>在终端中输入以下命令（复制粘贴即可）：</p>
-        <div class="code">npm install -g @openai/codex</div>
-      </div>
+      <div class="step-body"><p>打开 <a href="https://steampp.net" target="_blank">steampp.net</a> 下载安装</p></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body">
-        <p>安装完成后，验证：</p>
-        <div class="code">codex --version</div>
-      </div>
+      <div class="step-body"><p>进入「网络加速」，勾选 <strong>GitHub</strong>，一键加速</p></div>
     </div>
-  </section>
+    <div class="highlight"><p>🔧 装好后去 GitHub 下载 CC-switch 会快很多。</p></div>
 
-  <section id="network">
-    <h2>三、网络配置</h2>
-    <p>Codex 默认需要访问 OpenAI 的服务器。国内用户有以下几种选择：</p>
-
-    <h3>先装 Watt Toolkit（加速 GitHub）</h3>
-    <p>Watt Toolkit 只能加速 GitHub 访问，不能加速 OpenAI API。</p>
-<div class="step">
+    <h3>CC-switch：API 路由管理</h3>
+    <p>CC-switch 不提供翻墙，它管理你已有的代理怎么分配流量：哪些 API 走代理、哪些直连。</p>
+    <ul>
+      <li>OpenAI → 走你的代理或中转</li>
+      <li>DeepSeek → 国内直连</li>
+    </ul>
+    <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body">
-        <p>打开 <a href="https://steampp.net" target="_blank">steampp.net</a>，下载 Watt Toolkit（原名 Steam++）</p>
-      </div>
+      <div class="step-body"><p>从 <a href="https://github.com/CC-switch/CC-switch/releases" target="_blank">GitHub Release</a> 下载对应版本，解压即用</p></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body">
-        <p>安装后打开，切换到「网络加速」标签</p>
-      </div>
+      <div class="step-body"><p>配置规则文件，指定哪些域名走代理、哪些直连</p></div>
     </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <p>勾选 <strong>GitHub</strong>，点击「一键加速」</p>
-      </div>
-    </div>
-    <div class="highlight">
-      <p>✅ 完成！GitHub 访问快了，可用来下载 ccswitch 等工具。</p>
-    </div>
+    <div class="highlight"><p>💡 CC-switch 需要配合已有的代理或中转 API 使用。</p></div>
 
     <h3>方案 A：通过 GPT 中转 API</h3>
-    <p>国内有很多服务商提供 OpenAI API 的中转服务。你付费买额度，他们帮你转发到 OpenAI。</p>
-    <div class="highlight">
-      <p>💡 在中转服务商那拿到中转地址和 Key 后，用 <code>codex config set openai-base-url 你的地址</code> 配置即可。</p>
-    </div>
+    <p>找一家 GPT 中转服务商，付费买额度，他们帮你转发请求到 OpenAI。</p>
+    <div class="highlight"><p>💡 拿到中转地址后配置到 Codex：<code>codex config set openai-base-url 你的地址</code></p></div>
 
     <h3>方案 B：直接使用 DeepSeek API（推荐）</h3>
-    <p>DeepSeek 是国产大模型，国内直连，不需任何代理。价格是 GPT 的几十分之一。</p>
+    <p>国产大模型，国内直连，价格是 GPT 的几十分之一。不需要任何代理。</p>
     <p><strong>具体操作见下一节。</strong></p>
-  </section>
-
-  <section id="api">
-    <h2>四、接入 DeepSeek API</h2>
+  <h2>四、接入 DeepSeek API</h2>
     <p>DeepSeek 是国内的大模型服务商，API 在国内可直接访问，无需任何代理工具。</p>
 
     <h3>获取 API Key</h3>
