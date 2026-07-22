@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yanxou · 小项目集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0b0b14;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', 'PingFang SC', system-ui, -apple-system, sans-serif;
+    color: #e0e0e0;
+    padding: 24px;
+  }
+  .container {
+    max-width: 560px;
+    width: 100%;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+  .subtitle {
+    color: #6a6a8a;
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+  .projects {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .card {
+    background: #14141f;
+    border-radius: 12px;
+    padding: 20px 24px;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #1e1e30;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .card:hover {
+    background: #1a1a2e;
+    border-color: #00d4aa;
+    transform: translateY(-1px);
+  }
+  .card-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+    width: 48px;
+    text-align: center;
+  }
+  .card-body h2 {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 3px;
+  }
+  .card-body p {
+    font-size: 13px;
+    color: #6a6a8a;
+  }
+  .card-body .tag {
+    display: inline-block;
+    font-size: 11px;
+    background: #00d4aa18;
+    color: #00d4aa;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 6px;
+  }
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 12px;
+    color: #4a4a6a;
+  }
+  footer a { color: #6a6a8a; text-decoration: none; }
+  footer a:hover { color: #00d4aa; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Yanxou · 小项目集</h1>
+  <p class="subtitle">全静态前端小游戏，部署在 Vercel 上</p>
+  <div class="projects">
+    <a href="/codex-tutorial/demo/" class="card">
+      <div class="card-icon">🃏</div>
+      <div class="card-body">
+        <h2>记忆翻牌</h2>
+        <p>4×4 动物 Emoji 配对游戏，毛玻璃质感 UI</p>
+        <span class="tag">Codex 演示项目</span>
+      </div>
+    </a>
+    <a href="/snake-game/" class="card">
+      <div class="card-icon">🐍</div>
+      <div class="card-body">
+        <h2>贪吃蛇</h2>
+        <p>20×20 网格，渐变蛇身脉冲食物，触屏支持</p>
+        <span class="tag">Canvas 经典</span>
+      </div>
+    </a>
+    <a href="/codex-tutorial/" class="card" style="opacity:0.65" target="_blank">
+      <div class="card-icon">📘</div>
+      <div class="card-body">
+        <h2>Codex 完全入门指南</h2>
+        <p>面向国内开发者的 Codex 安装与配置教程</p>
+        <span class="tag">README</span>
+      </div>
+    </a>
+  </div>
+  <footer>
+    <a href="https://github.com/yanxou">GitHub</a>
+  </footer>
+</div>
+</body>
+</html>

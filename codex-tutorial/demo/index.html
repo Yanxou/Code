@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>记忆翻牌 - Codex 演示项目</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>✦ 记忆翻牌 ✦</h1>
+    <p class="subtitle">Codex 构建的简约小游戏</p>
+  </header>
+  <div class="stats-bar">
+    <div class="stat">
+      <span class="stat-label">步数</span>
+      <span id="moves" class="stat-value">0</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">用时</span>
+      <span id="timer" class="stat-value">00:00</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">配对</span>
+      <span id="pairs" class="stat-value">0 / 8</span>
+    </div>
+  </div>
+  <div class="game-board" id="gameBoard"></div>
+  <div class="controls">
+    <button id="resetBtn" class="btn btn-primary">🔄 重新开始</button>
+  </div>
+  <div class="win-overlay" id="winOverlay">
+    <div class="win-card">
+      <div class="win-icon">🎉</div>
+      <h2>恭喜通关！</h2>
+      <p id="winMessage">你用了 0 步，耗时 00:00</p>
+      <button id="playAgainBtn" class="btn btn-primary">再玩一局</button>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
