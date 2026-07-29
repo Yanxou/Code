@@ -1,470 +1,218 @@
-﻿# Codex 完全入门指南：从安装到实战
+﻿# Codex 完全入门指南
 
-> 面向国内开发者的 Codex 上手教程，附赠一个简约美观的小游戏实战 —— 全程图文讲解
+> 给第一次接触 AI 编程工具的电脑小白：先认识工具，再选择安装方式，最后完成一次安全的首次使用。
 >
-> 本文发布于个人技术博客 · 2026-07
+> 本文只写能够从官方文档或项目 README 确认的内容。社区工具和第三方 API 的行为会随版本变化，请以它们自己的发布页和设置页面为准。
 
----
+## 先看结论
 
-## 写在前面
+这里有四个容易混淆的名字：
 
-如果你是一名开发者，日常工作离不开 AI 编程助手，那你一定听说过 **Codex** —— 它是 OpenAI 推出的一款 AI 编程智能体，能直接在终端里理解你的需求、操作文件、运行命令，甚至帮你从零构建完整的应用。
-
-但对于国内开发者来说，上手 Codex 会遇到两个现实问题：
-
-1. **网络环境** — Codex 依赖 GitHub 和 OpenAI 的服务，需要科学上网
-2. **模型接入** — 默认配置下使用 OpenAI 的模型，对国内用户成本偏高
-
-本教程会手把手带你走完从安装到实战的完整流程，并针对国内网络环境做了优化方案，包含 **CC-switch 路由转发**、**Watt Toolkit 加速**，以及接入 **codex++ + DeepSeek API** 的详细配置。
-
-最后还会用 Codex 亲自生成一个 **简约美观的记忆翻牌小游戏**，让你直观感受 AI 编程智能体的实际威力。
-
----
-
-## 一、什么是 Codex？
-
-```mermaid
-graph TD
-    A[你在终端输入需求] --> B[Codex 理解意图]
-    B --> C[读取当前代码库]
-    B --> D[搜索相关信息]
-    D --> E[分析并制定方案]
-    C --> E
-    E --> F[生成代码/执行命令]
-    F --> G[验证结果]
-    G -->|不通过| E
-    G -->|通过| H[输出最终成果]
-```
-
-简单来说，**Codex 是一个运行在终端里的 AI 编程搭档**。它不是简单的代码补全工具，而是一个能**主动理解、规划、执行和验证**的智能体。
-
-和 GitHub Copilot、Cursor 等现有工具相比，Codex 的核心区别在于：
-
-| 特性 | Codex | 传统 AI 编程工具 |
+| 名称 | 它是什么 | 它不是什么 |
 | --- | --- | --- |
-| 工作模式 | 对话式智能体，可自主执行 | 编辑器内补全/问答 |
-| 文件操作 | 自动读取、编辑、创建 | 需手动操作文件 |
-| 命令执行 | 可直接运行 shell 命令 | 不可 |
-| 多轮调试 | 自动验证结果并修正 | 需手动反馈调试 |
-| 代码质量 | 可深度理解项目结构 | 关注局部代码段 |
+| **OpenAI Codex** | OpenAI 的编程智能体/产品名称，具体入口可能是官方 Codex CLI 或桌面应用 | 不是 DeepSeek，也不是 CC Switch |
+| **CC Switch** | 开源的 AI 编程 CLI 统一管理工具，可管理 Codex、Claude Code、Gemini CLI、OpenCode、OpenClaw、Hermes Agent 等工具的供应商配置、本地路由、MCP、Skills、会话和用量 | 不是模型，不是 API 服务商，也不是网络加速器 |
+| **Codex++** | 面向 OpenAI Codex / ChatGPT 桌面应用的外部启动器和管理工具，可切换供应商、转换协议、管理会话并提供界面增强 | 不是 OpenAI 官方 Codex 本体，也不是官方 Codex CLI |
+| **Watt Toolkit** | 开源、跨平台的多功能游戏工具箱，原名 Steam++ | 不是 OpenAI 加速器、Codex 配置器或 GPT 中转站 |
 
----
+## 你该选哪条路
 
-## 二、下载 CC-switch（API 路由管理器）
+### 路线 1：只使用官方 Codex
 
-### 什么是 CC-switch
+适合希望使用官方账号、官方登录和官方支持的人。先从 OpenAI 官方 Codex 文档进入，按官方页面选择 CLI 或桌面入口。官方页面的安装命令、登录方式和配置项可能会更新，本文不复制未经核对的命令。
 
-CC-switch 是一个 API 路由管理工具。它不提供翻墙功能，而是管理已有的代理流量：
-- 哪些域名走代理（如 OpenAI）
-- 哪些域名直连（如 DeepSeek）
+### 路线 2：使用 CC Switch 管理多个 CLI 供应商
 
-### 下载 CC-switch
+适合已经安装 Codex CLI，想在多个供应商之间切换，或者需要管理本地路由、MCP、Skills 和用量的人。CC Switch 的具体下载包、支持平台和界面，以 [ccswitch.io](https://www.ccswitch.io) 及其官方仓库为准。
 
-从 GitHub Release 下载对应系统版本，解压即用。
+### 路线 3：使用 Codex++ 管理桌面版 Codex
 
-### Watt Toolkit（仅加速 GitHub）
+适合使用 OpenAI Codex / ChatGPT 桌面应用，并希望用图形界面管理供应商、模型、会话或增强功能的人。它需要从 [Codex++ Releases](https://github.com/BigPizzaV3/CodexPlusPlus/releases) 下载对应系统安装包。
 
-Watt Toolkit 只能加速 GitHub，不能加速 OpenAI。下载 CC-switch 时可以用它：
-1. 官网下载安装包
-2. 进入「网络加速」勾选 GitHub，一键加速
+### 路线 4：使用 DeepSeek 或其他兼容 API
 
-### CC-switch 配置
+适合已经拥有某个 API 服务商账号，并确认该服务商提供与 Codex 兼容的协议、Base URL、模型名称和 Key 的人。DeepSeek API 在中国大陆通常可以直接访问，但“能访问 DeepSeek”不等于“官方 Codex 原生支持 DeepSeek”。通常需要通过 CC Switch、Codex++ 或其他明确支持自定义供应商的工具接入。
 
-```yaml
-routes:
-  - domain: "github.com"
-    proxy: auto
-  - domain: "*.openai.com"
-    proxy: auto
-  - domain: "*.deepseek.com"
-    proxy: direct
+## 一、安装前准备
+
+### 1. 先确认你要安装的是哪一个
+
+- 想要官方产品：去 OpenAI 官方 Codex 页面。
+- 想要多供应商图形管理：看 CC Switch。
+- 想要管理桌面版 Codex：看 Codex++。
+- 想要加速 GitHub 下载：可以了解 Watt Toolkit，但它不是 Codex 的必需依赖；本文只把它作为下载 CC Switch 的可选 GitHub 辅助工具。
+
+不要从搜索结果中的“破解版”“一键配置包”“未知网盘安装包”安装，也不要把 API Key 发到群聊、截图、issue 或网页表单里。
+
+### 2. Windows 基础准备
+
+如果安装说明要求 Node.js，再去 [Node.js 官网](https://nodejs.org) 下载 **LTS** 版本，双击安装包，一路使用默认选项即可。安装后重新打开终端，让系统刷新环境变量。
+
+如果某个桌面安装包已经自带运行环境，就不需要为了它额外安装 Node.js。以该项目自己的安装说明为准。
+
+### 3. 终端是什么
+
+Windows 的终端就是一个可以输入文字命令的小窗口：
+
+1. 按 `Win` 键，搜索“PowerShell”或“终端”。
+2. 打开后，把教程中的命令复制进去。
+3. 按回车执行。
+4. 不认识的命令不要随便执行；看不懂报错时，把报错文字复制出来再处理。
+
+## 二、安装官方 Codex
+
+官方 Codex 的安装方式和入口会随产品更新。建议按下面顺序操作：
+
+1. 打开 OpenAI 官方 Codex 文档或产品页面。
+2. 选择与你的系统对应的入口（CLI 或桌面应用）。
+3. 只使用官方页面给出的当前安装命令或安装包。
+4. 第一次启动时，按照官方登录流程完成授权。
+5. 在一个空项目或练习项目中测试，不要一开始就在重要项目里允许自动改文件。
+
+### 第一次对话可以这样说
+
+```text
+先不要修改文件。请先阅读当前项目结构，用简单中文告诉我你看到了哪些文件，以及你准备怎么做。等待我确认后再编辑。
 ```
 
----
+这样可以先确认 Codex 是否打开了正确的项目目录，也能避免它直接改错文件。
 
-## 三、安装 Codex
+## 三、CC Switch：它负责什么
 
+根据 CC Switch 官网介绍，它是一个 **AI 编程 CLI 统一管理工具**，核心是帮助你管理多个 CLI 工具的供应商配置和工作流。它支持的范围包括 Codex、Claude Code、Gemini CLI、OpenCode、OpenClaw、Hermes Agent 等，并包含供应商配置、本地路由、MCP、Skills、会话和用量等能力。
 
-### 从微软商店安装（推荐）
+### 用 CC Switch 的基本流程
 
-打开微软商店，搜索 Codex，点击安装。不需要 Node.js。
+1. 从 [ccswitch.io](https://www.ccswitch.io) 或官网链接到的官方仓库获取安装包。
+2. 安装并打开 CC Switch。
+3. 在工具列表中选择你已经安装的 CLI。
+4. 在供应商页面添加你自己的供应商信息：名称、协议、Base URL、模型和 API Key。具体字段以当前版本界面为准。
+5. 使用“测试”或类似功能确认供应商可用。
+6. 再切换到目标供应商，启动对应的 CLI。
 
-### 通过终端安装
+### CC Switch 与中转 API 的关系
 
-如果习惯命令行，先装 Node.js（官网下载 LTS 版），然后：
+CC Switch 本身不是中转站，也不会凭空提供模型额度。你仍然需要：
 
-```bash
-npm install -g @openai/codex
+- 官方账号，或
+- 你自己注册的 API 服务商账号，或
+- 你信任的第三方中转服务账号。
+
+中转服务会看到你发送给它的请求。使用前应查看服务商的隐私、计费、保留日志和退款规则，不要把敏感项目源码发送给不信任的服务商。
+
+## 四、Codex++：它负责什么
+
+根据 Codex++ 官方 README，它是 **面向 OpenAI Codex / ChatGPT 桌面应用的外部启动器与管理工具**。它通过 Chromium DevTools Protocol 和本地辅助服务工作，不修改官方应用的 `app.asar`，也不向安装目录写补丁文件。
+
+### 安装 Codex++
+
+从 [Codex++ Releases](https://github.com/BigPizzaV3/CodexPlusPlus/releases) 下载最新版：
+
+- Windows：文件名类似 `CodexPlusPlus-*-windows-x64-setup.exe`
+- macOS Intel：文件名类似 `CodexPlusPlus-*-macos-x64.dmg`
+- macOS Apple Silicon：文件名类似 `CodexPlusPlus-*-macos-arm64.dmg`
+
+安装后通常有两个入口：
+
+- **Codex++**：启动官方桌面应用并加载已保存的供应商配置和增强功能。
+- **Codex++ 管理工具**：管理供应商、模型、会话、工具插件、增强功能、脚本、更新和诊断。
+
+首次使用按官方 README 的建议：先打开管理工具，确认官方应用路径和运行状态，再配置供应商或增强功能，最后从 Codex++ 入口启动。
+
+### 在 Codex++ 中接入兼容 API
+
+Codex++ 官方 README 明确区分了几种供应商模式：
+
+- **官方登录**：只使用 ChatGPT / Codex 官方账号。
+- **官方登录 + API**：保留官方账号和插件入口，但模型请求走兼容 API。
+- **纯 API**：不依赖官方账号，使用自定义 Base URL 和 Key。
+- **聚合供应商**：在多个普通 API 供应商之间路由。
+
+具体配置请在 Codex++ 管理工具中完成，不要照抄网上流传的旧版 JSON。当前 README 提到的配置数据位置是：
+
+- Codex 配置：`~/.codex/config.toml`
+- Codex 登录状态：`~/.codex/auth.json`
+- Codex++ 状态与日志：`~/.codex-session-delete/`
+
+不要把 `auth.json`、API Key 或包含 Key 的配置文件上传到 GitHub。
+
+## 五、DeepSeek API：能用，但要分清边界
+
+DeepSeek 是独立的模型和 API 服务。它在中国大陆通常可以直接访问，但它不是 OpenAI Codex，也不会因为安装 Codex 就自动出现。
+
+### 正确的接入思路
+
+1. 在 DeepSeek 官方平台注册账号并创建 API Key。
+2. 查看 DeepSeek 当前 API 文档，确认可用的 Base URL、协议和模型名。
+3. 确认你使用的工具支持自定义供应商：例如 CC Switch 或 Codex++ 的对应模式。
+4. 在工具的供应商界面填写 Base URL、API Key、协议和模型。
+5. 先用工具内的测试功能验证，再启动 Codex。
+
+### 不要复制网上的旧配置
+
+网上常见的“一键配置”文章，可能把不同项目、不同版本的命令和配置文件混在一起。本文不提供未经对应项目 README 确认的安装命令、配置键名或配置文件路径。
+
+不同工具、不同版本的配置字段不能混用。看到配置示例时，必须确认它属于哪个工具、哪个版本，并从对应项目的官方发布页重新核对。
+
+## 六、Watt Toolkit：只讲它真正做的事
+
+Watt Toolkit 官方 README 将它介绍为“开源跨平台的多功能游戏工具箱”，原名 Steam++，其大部分功能需要安装 Steam。它不是 OpenAI、Codex、CC Switch 或 GPT 中转服务。
+
+因此，本教程只建议把它当作**可选的 GitHub 访问/下载辅助工具**来了解：
+
+- 它不是 Codex 的安装前置条件。
+- 它不是 OpenAI API 加速器。
+- 它不能替你注册 API、提供模型额度或配置 DeepSeek。
+- 使用前应以 Watt Toolkit 当前官方 README 和软件界面为准。
+
+## 七、最小安全配置
+
+### API Key
+
+- 只在可信的官方平台或你选择的供应商设置页面输入。
+- 不要写进 Git 仓库、README、截图、聊天记录或 issue。
+- 如果不小心泄露，立刻到供应商后台撤销并重新创建。
+
+### 项目权限
+
+第一次使用 AI 编程工具时：
+
+1. 先备份项目，或使用 Git。
+2. 先让工具阅读和解释，不要立即自动执行。
+3. 对删除文件、安装依赖、联网、提交代码等操作逐项确认。
+4. 让工具修改后查看差异，再运行测试。
+
+### 给小白的第一条任务
+
+```text
+请先不要修改任何文件。阅读当前项目，告诉我入口文件、主要目录和运行方式。如果需要安装依赖或执行命令，先列出命令并说明用途，等待我确认。
 ```
 
-验证安装：
+## 八、常见问题
 
-```bash
-codex --version
-```
+### 为什么有了 Codex 还要 CC Switch 或 Codex++？
 
+它们解决的是管理问题，不是同一个产品：CC Switch 面向多个 AI CLI 的供应商和工作流管理；Codex++ 面向桌面版 Codex / ChatGPT 的外部启动和管理。只想使用官方 Codex 时，不需要强行安装它们。
 
-### 从微软商店安装（推荐）
+### Watt Toolkit 能不能解决 Codex 连接 OpenAI 的问题？
 
-打开微软商店，搜索 Codex，点击安装。不需要 Node.js。
+不能把它当作解决方案。Watt Toolkit 官方 README 的定位是游戏工具箱。本教程不声称它能加速 OpenAI API。
 
-### 通过终端安装
+### DeepSeek 能不能直接替代 OpenAI Codex？
 
-如果习惯命令行，先装 Node.js（官网下载 LTS 版），然后：
+不能简单这样说。DeepSeek 是模型/API，Codex 是编程产品/工具。要把 DeepSeek 用进 Codex 工作流，必须有一个明确支持自定义供应商和兼容协议的中间工具，并按该工具版本配置。
 
-```bash
-npm install -g @openai/codex
-```
+### 为什么网上教程的配置文件不一样？
 
-验证安装：
+因为可能是不同产品、不同版本、不同安装方式，或者是非官方工具。先确认教程讲的是官方 Codex、CC Switch、Codex++ 还是其他项目，再核对对应项目的 README 和发行版本。
 
-```bash
-codex --version
-```
+## 参考资料
 
+- [CC Switch 官网](https://www.ccswitch.io)
+- [Codex++ 官方 README](https://github.com/BigPizzaV3/CodexPlusPlus/blob/main/README.md)
+- [Codex++ Releases](https://github.com/BigPizzaV3/CodexPlusPlus/releases)
+- [Watt Toolkit 官方 README](https://github.com/lanyongjia/watt-toolkit/blob/develop/README.md)
+- [OpenAI Codex 官方文档](https://developers.openai.com/codex)
+- [DeepSeek 官方平台](https://platform.deepseek.com)
 
-### 3.1 安装前置条件
-
-Codex 需要 Node.js 18+ 环境，推荐使用 LTS 版本：
-
-```bash
-# 检查 Node.js 版本
-node --version   # 建议 >= 18.0.0
-
-# 检查 npm 版本
-npm --version    # 建议 >= 9.0.0
-```
-
-> 如果还没有 Node.js，可以去 [Node.js 官网](https://nodejs.org/) 下载 LTS 版本安装包，或使用 nvm 管理版本。
-
-### 3.2 安装 Codex
-
-完成网络配置后，安装过程非常简单：
-
-```bash
-# 使用 npm 全局安装
-npm install -g @openai/codex
-
-# 验证安装
-codex --version
-```
-
-如果网络不通，检查 CC-switch 是否已启动。
-
-### 3.3 首次启动
-
-```bash
-# 在终端中启动 Codex
-codex
-```
-
-首次启动会进行初始化，包括：
-
-- 下载运行时依赖（Node.js、Playwright 等）
-- 配置默认模型（GPT-5，作为底层推理引擎）
-- 创建配置文件（`~/.codex/config.json`）
-
-```json
-{
-  "model": "gpt-5",
-  "theme": "dark",
-  "auto_exec": true,
-  "codex_plus_enabled": false
-}
-```
-
-### 3.4 Codex 的核心概念
-
-Codex 的每个工作单元叫一个 **thread（线程）**，类似于一次对话会话：
-
-- 你输入需求，Codex 调用底层模型理解
-- Codex 可以读取文件、搜索代码、运行命令
-- Codex 会展示它每一步的思考过程
-- 你可以随时干预、修改方向或直接执行建议
-
----
-
-## 四、接入 codex++ 与 DeepSeek API
-
-这是很多开发者最关心的一节。**codex++** 是对 Codex 功能的增强扩展，而 **DeepSeek API** 则提供了国内可直连的高性价比大模型接入方式。
-
-### 6.1 什么是 codex++
-
-codex++ 是社区开发的一套 Codex 增强插件，主要提供：
-
-- **多模型支持** — 接入 DeepSeek、Claude、Gemini 等模型
-- **自定义指令** — 预设 Prompt 模板
-- **上下文增强** — 自动引入项目文档、API 定义
-- **成本优化** — 自动选择性价比最高的模型
-
-### 6.2 安装 codex++
-
-```bash
-# 使用 npm 安装
-npm install -g codex-plus
-
-# 验证安装
-codex++ --version
-
-# 生成配置文件
-codex++ init
-```
-
-### 6.3 接入 DeepSeek API
-
-[DeepSeek](https://platform.deepseek.com/) 是国内优秀的 AI 模型提供商，API 在国内可直接访问，无需代理。
-
-**第一步：获取 API Key**
-
-1. 访问 [DeepSeek 开发者平台](https://platform.deepseek.com/)
-2. 注册账号 → 进入 API Keys 页面
-3. 点击「创建 API Key」，复制保存
-
-**第二步：配置 codex++**
-
-编辑 `~/.codex-plus/config.json`：
-
-```json
-{
-  "default_provider": "deepseek",
-  "providers": {
-    "deepseek": {
-      "api_key": "sk-你的DeepSeekAPIKey",
-      "base_url": "https://api.deepseek.com",
-      "model": "deepseek-chat",
-      "max_tokens": 8192,
-      "temperature": 0.7
-    },
-    "openai": {
-      "api_key": "sk-你的OpenAI API Key",
-      "model": "gpt-5",
-      "max_tokens": 16384
-    }
-  },
-  "routing": {
-    "mode": "auto",
-    "preferred_local": "deepseek",
-    "fallback": "openai"
-  }
-}
-```
-
-### 6.4 配置对接工作流
-
-配置完成后，Codex 与 codex++、DeepSeek 的对接架构如下：
-
-```mermaid
-graph TB
-    A[你在终端使用 Codex] --> B[Codex 核心引擎]
-    B --> C{codex++ 路由层}
-    C -->|日常任务| D[DeepSeek API<br>国内直连]
-    C -->|复杂任务| E[OpenAI GPT-5<br>通过代理]
-    D --> G[返回结果]
-    E --> G
-    G --> H[Codex 执行并反馈]
-```
-
-**关键优化点：**
-
-- **日常编码任务**（补全、重构、Debug）使用 DeepSeek，速度快成本低
-- **复杂推理任务**（架构设计、复杂算法）使用 GPT-5，质量更高
-
-### 6.5 验证配置
-
-```bash
-# 测试 DeepSeek 连接
-codex++ test deepseek
-
-# 查看当前使用的模型
-codex++ status
-
-# 启动 Codex（此时已自动启用 codex++）
-codex
-```
-
-如果一切正常，你会看到启动日志中显示当前使用的模型信息。日常对话中的普通编程需求会默认走 DeepSeek，只有在需要更强推理能力时才会回退到 GPT-5。
-
----
-
-## 五、实战：用 Codex 做一个记忆翻牌游戏
-
-理论说完了，我们来点实际的。下面是用 Codex 构建的一个 **简约美观的记忆翻牌小游戏**。
-
-### 7.1 游戏效果预览
-
-![记忆翻牌游戏效果图](./game-mockup.svg)
-
-这个游戏包含以下核心功能：
-
-- 4x4 记忆翻牌（8 对动物 Emoji）
-- 点击翻转动画（3D CSS 过渡）
-- 步数、用时和配对进度统计
-- 通关庆祝弹窗
-- 响应式设计，手机电脑都适配
-
-### 7.2 用 Codex 实现
-
-创建这个游戏的完整代码总共只花了 **3 次对话**。过程大致如下：
-
-**对话 1：定义需求**
-
-> "_创建一个记忆翻牌小游戏，4x4 网格，8 对动物 Emoji 配对，毛玻璃风格 UI，深色渐变背景。_"
-
-Codex 自动生成了 HTML 结构和基本样式，并创建了游戏容器。
-
-**对话 2：完善交互逻辑**
-
-> "_添加翻牌动画、计时器、计步器、配对状态，以及通关弹窗。_"
-
-Codex 完成了 JavaScript 游戏逻辑，包括：
-
-- 卡片洗牌（Fisher-Yates 算法）
-- 翻转匹配逻辑
-- 计时器（首次点击启动）
-- 匹配成功动画（弹跳效果）
-- 通关弹窗（显示用时和步数）
-
-**对话 3：优化和响应式**
-
-> "_适配移动端，优化动画流畅度，微调颜色方案。_"
-
-Codex 添加了媒体查询，调整了卡片大小和间距，确保在小屏幕上的体验同样出色。
-
-### 7.3 项目结构
-
-```
-codex-tutorial/demo/
-├── index.html    # 页面结构
-├── style.css     # 样式（毛玻璃、动画、响应式）
-└── app.js        # 游戏逻辑（洗牌、翻转、计时）
-```
-
-### 7.4 核心代码解读
-
-**翻牌逻辑（app.js）：**
-
-```javascript
-function flipCard(card, index) {
-  if (isLocked) return;                      // 防止快速连点
-  if (card.classList.contains('flipped')) return;
-  if (card.classList.contains('matched')) return;
-  if (flippedCards.length >= 2) return;
-
-  if (!timerInterval) startTimer();          // 首次点击启动计时
-
-  card.classList.add('flipped');
-  flippedCards.push({ card, index });
-
-  if (flippedCards.length === 2) {
-    moves++;
-    document.getElementById('moves').textContent = moves;
-    checkMatch();
-  }
-}
-```
-
-**毛玻璃容器（style.css）：**
-
-```css
-.container {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-}
-```
-
-### 7.5 在线体验
-
-你可以直接在浏览器中打开这个游戏：
-
-```
-codex-tutorial/demo/index.html
-```
-
-不需要任何服务器，双击文件即可在浏览器中运行。试试看能多少步完成！
-
----
-
-## 六、总结与最佳实践
-
-### 8.1 安装配置速查表
-
-| 步骤 | 工具/操作 | 目的 |
-| --- | --- | --- |
-| 1 | Watt Toolkit | 加速 GitHub 访问 |
-| 2 | CC-switch | 精细化路由转发 |
-| 3 | 微软商店搜索 Codex 安装 / npm install -g @openai/codex | 安装 Codex |
-| 4 | DeepSeek 注册获取 API Key | 获取国内可用的 AI 模型 |
-| 5 | npm install -g codex-plus | 安装增强插件 |
-| 6 | codex++ init + 配置 DeepSeek | 对接国内模型 |
-| 7 | codex | 启动使用 |
-
-### 8.2 使用 Codex 的几点建议
-
-1. **描述越具体，结果越好** — 不要只说"写一个游戏"，而是说"创建一个 4x4 的记忆翻牌游戏，8 对 Emoji，毛玻璃深色风格"
-2. **善用迭代** — 先让 Codex 生成基础版本，再逐步细化，比一次性提太多要求效果好得多
-3. **允许它犯错** — Codex 有自动纠错机制，给它一些空间自己发现问题并修复
-4. **随时干预** — 你可以让 Codex 停下来，修改方向后再继续
-5. **成本控制** — 日常任务用 DeepSeek，复杂任务用 GPT-5，codex++ 的自动路由会帮你智能切换
-
-### 8.3 常见问题
-
-**Q：codex 命令找不到？**
-
-确保 npm 全局安装目录在 PATH 中。Windows 上通常是 `%APPDATA%\npm`，Mac/Linux 上是 `/usr/local/bin`。
-
-**Q：DeepSeek 响应慢？**
-
-检查是否误走了代理。DeepSeek 国内直连速度最快，确保 CC-switch 配置中 `*.deepseek.com` 设置为直连。
-
-**Q：如何切换模型？**
-
-在 codex++ 配置中修改 `routing.mode` 为 `"manual"`，然后在 Codex 中使用 `/model deepseek` 或 `/model gpt-5` 切换。
-
----
-
-## 七、部署与国内访问
-
-### Vercel（默认方案）
-
-本项目部署在 Vercel，但 **Vercel 在国内部分地区访问慢甚至无法打开**。
-
-### GitHub Pages（国内推荐）
-
-GitHub Pages 是 GitHub 自带的静态托管，国内直连，访问比 Vercel 稳定。
-
-启用方法：
-1. 打开仓库 **Settings → Pages**
-2. 在 Source 处选择 **GitHub Actions**
-3. 已配置好的 .github/workflows/deploy-pages.yml 会在每次推送时自动部署
-4. 访问：https://yanxou.github.io/Code/
-
----
-
-
-更多实用教程 / 参考博客
-
-以下是一些优秀的个人技术博客，涵盖 AI 编程、前端开发和工具链配置，值得收藏：
-
-| 博客名称 | 方向 | 推荐理由 |
-| --- | --- | --- |
-| [竹子's Blog](https://zhuzi.dev/) | AI 编程工具 | 深度评测各类 AI 编程工具，Codex 实战案例丰富 |
-| [DIYGod](https://diygod.cc/) | 开发者工具 | 保姆级教程风格，图文并茂 |
-| [Evan's Blog](https://blog.evanluo.top/) | 全栈开发 | 工具体验 + 源码解析，质量很高 |
-| [RocketX](https://rocketx.cc/) | 效率工具 | AI 工具链配置教程，适合初学者 |
-| [Yachen's Blog](https://yachen.dev/) | 前端开发 | 前端 + AI 编程实践，代码质量高 |
-| [KAAASS](https://kaaass.net/) | 开发环境 | 网络配置、科学上网类教程很实用 |
-| [Spencer's Blog](https://spencerwoo.com/) | 开发工具链 | 工具配置 + 工作流优化，专业度很高 |
-| [Lee's Blog](https://leeblog.dev/) | AI 应用开发 | 专注于 AI API 对接和成本优化 |
-| [Ivon's Blog](https://ivon.blog/) | 编程入门 | 面向小白的教程，条理清晰 |
-| [Liang's Notes](https://liangs.xyz/) | 开发者笔记 | 配置类文章很详尽，参考价值高 |
-
-> 如果你知道其他优质的国内技术博客，欢迎分享补充！
-
----
-
-*本教程使用 Codex 编写，Demo 游戏由 Codex 生成。*
-
-*欢迎 Star & Share，让更多开发者用上 AI 编程的便利。*
+> 资料会更新。安装命令、版本要求、配置字段和供应商兼容性都应以对应项目当前官方页面为准。

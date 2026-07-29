@@ -5,255 +5,48 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Codex 完全入门指南 · Yanxou</title>
 <style>
-:root{--bg:#faf9f6;--card:#fff;--fg:#1a1a2e;--mute:#6a6a8a;--border:#e0ddd6;--accent:#2d9f8b;--accent-soft:#e6f5f1}
+:root{--bg:#faf9f6;--card:#fff;--fg:#1a1a2e;--text:#3a3a4e;--mute:#6a6a8a;--border:#e0ddd6;--accent:#2d9f8b;--soft:#e6f5f1}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:'Segoe UI','PingFang SC',system-ui,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
-.container{max-width:680px;margin:0 auto;padding:40px 20px 60px}
-header{margin-bottom:36px}
-.back{display:inline-block;color:var(--mute);text-decoration:none;font-size:13px;margin-bottom:12px}
-.back:hover{color:var(--accent)}
-h1{font-size:28px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
-.meta{font-size:13px;color:var(--mute)}
-.toc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:32px}
-.toc h2{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--accent)}
-.toc a{display:block;padding:5px 0;color:var(--fg);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border)}
-.toc a:last-child{border:none}
-.toc a:hover{color:var(--accent)}
-section{margin-bottom:40px}
-h2{font-size:20px;font-weight:600;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--accent-soft)}
-h3{font-size:16px;font-weight:500;margin:20px 0 8px;color:var(--accent)}
-p,li{font-size:14px;color:#3a3a4e;margin-bottom:10px}
-ul{padding-left:20px;margin-bottom:12px}
-li{margin-bottom:4px}
-.highlight{background:var(--accent-soft);border-radius:8px;padding:14px 16px;margin:12px 0}
-.highlight p{color:var(--fg);margin:0;font-size:13px}
-.code{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin:10px 0;font-family:Cascadia Code,'JetBrains Mono',monospace;font-size:13px;overflow-x:auto;color:var(--fg)}
-.step{display:flex;gap:14px;margin-bottom:14px;align-items:flex-start}
-.step-num{flex-shrink:0;width:28px;height:28px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
-.step-body{flex:1;min-width:0}
-.step-body p{margin:0}
-.step-body .code{margin:8px 0}
-.grid{display:flex;flex-direction:column;gap:10px}
-.grid-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit}
-.grid-item h4{font-size:14px;font-weight:500;margin-bottom:3px}
-.grid-item p{font-size:12px;color:var(--mute);margin:0}
-footer{text-align:center;padding-top:24px;border-top:1px solid var(--border);font-size:13px;color:var(--mute)}
-footer a{color:var(--accent);text-decoration:none}
+body{background:var(--bg);color:var(--fg);font-family:'Segoe UI','PingFang SC',system-ui,sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased}
+.container{max-width:700px;margin:0 auto;padding:40px 20px 64px}
+header{margin-bottom:30px}.back{display:inline-block;color:var(--mute);text-decoration:none;font-size:13px;margin-bottom:12px}.back:hover{color:var(--accent)}
+h1{font-size:28px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}.meta{font-size:13px;color:var(--mute)}
+.toc,.notice,.tool-card,.step{background:var(--card);border:1px solid var(--border);border-radius:12px}
+.toc{padding:18px 22px;margin-bottom:32px}.toc h2{font-size:14px;color:var(--accent);margin-bottom:8px}.toc a{display:block;padding:4px 0;color:var(--fg);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border)}.toc a:last-child{border:0}.toc a:hover{color:var(--accent)}
+section{margin-bottom:38px}h2{font-size:20px;font-weight:600;padding-bottom:8px;margin-bottom:12px;border-bottom:2px solid var(--soft)}h3{font-size:16px;font-weight:600;color:var(--accent);margin:20px 0 8px}
+p,li{font-size:14px;color:var(--text);margin-bottom:9px}ul{padding-left:20px;margin-bottom:12px}li{margin-bottom:4px}strong{color:var(--fg)}a{color:var(--accent)}
+.notice{background:var(--soft);border-color:#c5e7df;padding:14px 16px;margin:12px 0}.notice p{margin:0;color:var(--fg);font-size:13px}
+.tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.tool-card{padding:14px 16px}.tool-card h4{font-size:14px;font-weight:600;margin-bottom:4px}.tool-card p{font-size:12px;color:var(--mute);margin:0}
+.step{display:flex;gap:12px;padding:14px 16px;margin:10px 0}.num{flex:0 0 26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600}.step-body{min-width:0;flex:1}.step-body p{margin:0 0 5px}.step-body p:last-child{margin:0}
+.code{background:#f5f4f0;border:1px solid var(--border);border-radius:7px;padding:10px 12px;margin:8px 0;font:13px/1.6 Consolas,'Cascadia Code',monospace;overflow:auto;white-space:pre-wrap;color:var(--fg)}
+.warn{border-left:3px solid #d88b55;padding:8px 12px;background:#fff8f1;margin:10px 0}.warn p{margin:0;font-size:13px}
+footer{border-top:1px solid var(--border);padding-top:20px;text-align:center;color:var(--mute);font-size:13px}footer p{font-size:13px;color:var(--mute)}
+@media(max-width:520px){.container{padding:30px 16px 48px}h1{font-size:24px}.tool-grid{grid-template-columns:1fr}.step{padding:12px}}
 </style>
 </head>
 <body>
 <div class="container">
-  <header>
-    <a class="back" href="..">← 回到首页</a>
-    <h1>Codex 完全入门指南</h1>
-    <p class="meta">面向电脑小白 · 尽量不用命令行 · 2026-07</p>
-  </header>
+<header><a class="back" href="..">← 回到首页</a><h1>Codex 完全入门指南</h1><p class="meta">给第一次接触 AI 编程工具的电脑小白 · 以官方资料为准</p></header>
+<div class="notice"><p>先记住：OpenAI Codex、CC Switch、Codex++、Watt Toolkit 和 DeepSeek 是不同的东西。本文会先分清它们，再决定是否需要安装。</p></div>
+<div class="toc"><h2>目录</h2><a href="#what">一、先认识这几个工具</a><a href="#choose">二、你该选哪条路</a><a href="#install">三、安装官方 Codex</a><a href="#switch">四、使用 CC Switch</a><a href="#plus">五、使用 Codex++</a><a href="#deepseek">六、接入 DeepSeek 等兼容 API</a><a href="#watt">七、Watt Toolkit 只负责什么</a><a href="#safe">八、安全与第一次使用</a></div>
 
-  <div class="toc">
-    <h2>📋 目录</h2>
-    <a href="#intro">一、Codex 是什么</a>
-    <a href="#install">二、下载安装 Codex</a>
-    <a href="#network">三、网络配置（小白友好版）</a>
-    <a href="#api">四、接入 DeepSeek API</a>
-    <a href="#config">五、基础配置</a>
-    <a href="#start">六、第一次使用</a>
-    <a href="#deploy">七、部署与国内访问</a>
-  </div>
+<section id="what"><h2>一、先认识这几个工具</h2><div class="tool-grid"><div class="tool-card"><h4>OpenAI Codex</h4><p>OpenAI 的编程智能体/产品名称。入口可能是官方 CLI 或桌面应用。</p></div><div class="tool-card"><h4>CC Switch</h4><p>统一管理多个 AI 编程 CLI 的供应商配置、本地路由、MCP、Skills、会话和用量。</p></div><div class="tool-card"><h4>Codex++</h4><p>面向 OpenAI Codex / ChatGPT 桌面应用的外部启动器和管理工具。</p></div><div class="tool-card"><h4>Watt Toolkit</h4><p>开源跨平台多功能游戏工具箱，原名 Steam++，不是 OpenAI 或 Codex 工具。</p></div></div><div class="warn"><p>不要把 CC Switch 或 Codex++ 说成 OpenAI 官方组件，也不要把 Watt Toolkit 说成 OpenAI API 加速器。</p></div></section>
 
-  <section id="intro">
-    <h2>一、Codex 是什么</h2>
-    <p><strong>Codex 是一个 AI 编程助手</strong>，但它和普通的代码补全工具不一样。你可以把它想象成一个坐在你旁边、能看懂你整个项目的程序员搭档。</p>
-    <p>你只要告诉它你想做什么——比如"帮我写一个贪吃蛇游戏"——它就会自己读你的文件、写代码、运行命令，甚至帮你调试。</p>
-    <div class="highlight">
-      <p>💡 简单说：你在聊天框里说要什么，Codex 帮你写出来。</p>
-    </div>
-    <p>Codex 由 OpenAI 开发，底层默认使用 GPT 系列模型。对于国内用户，我们可以通过配置改用 DeepSeek 等国产模型，速度和费用都更友好。</p>
-  </section>
+<section id="choose"><h2>二、你该选哪条路</h2><h3>只用官方 Codex</h3><p>适合使用官方账号、官方登录和官方支持。直接按 <a href="https://developers.openai.com/codex" target="_blank">OpenAI Codex 官方文档</a>选择 CLI 或桌面入口。</p><h3>需要切换多个供应商</h3><p>选择 CC Switch。它是管理工具，本身不是模型，也不会自动赠送 API 额度。</p><h3>使用桌面版 Codex 并想要图形管理</h3><p>选择 Codex++。它需要官方 Codex / ChatGPT 桌面应用，并从自己的 Release 页面安装。</p><h3>想用 DeepSeek</h3><p>DeepSeek 是独立的模型/API。它在中国大陆通常可直连，但要通过明确支持自定义供应商的工具接入，不等于官方 Codex 原生自带 DeepSeek。</p></section>
 
-  <section id="install">
-    <h2>二、下载安装 Codex</h2>
-    <p>推荐直接从微软商店安装，完全不需要命令行。</p>
+<section id="install"><h2>三、安装官方 Codex</h2><p>官方安装方式会随版本更新，所以不要照抄旧博客中的命令。按下面做：</p><div class="step"><div class="num">1</div><div class="step-body"><p>打开 <a href="https://developers.openai.com/codex" target="_blank">OpenAI Codex 官方文档</a>。</p></div></div><div class="step"><div class="num">2</div><div class="step-body"><p>选择你的系统和入口：CLI 或桌面应用。</p></div></div><div class="step"><div class="num">3</div><div class="step-body"><p>只使用官方页面提供的安装包或当前命令。若说明要求 Node.js，再从 <a href="https://nodejs.org" target="_blank">Node.js 官网</a>安装 LTS 版本。</p></div></div><div class="step"><div class="num">4</div><div class="step-body"><p>第一次启动按官方登录流程授权。先在练习项目里使用，不要直接让它修改重要项目。</p></div></div><p>第一次对话建议这样说：</p><div class="code">先不要修改文件。请阅读当前项目结构，用简单中文告诉我你看到了哪些文件，以及你准备怎么做。需要执行命令时先列出命令并等待我确认。</div></section>
 
-    <h3>从微软商店安装（推荐新手）</h3>
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body"><p>打开 Windows 微软商店，搜索 <strong>Codex</strong></p></div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body"><p>点击「安装」，等待完成。不需要装 Node.js。</p></div>
-    </div>
+<section id="switch"><h2>四、使用 CC Switch</h2><p>CC Switch 官网将它定位为 AI 编程 CLI 统一管理工具，支持 Codex、Claude Code、Gemini CLI、OpenCode、OpenClaw、Hermes Agent 等。</p><div class="step"><div class="num">1</div><div class="step-body"><p>从 <a href="https://www.ccswitch.io" target="_blank">ccswitch.io</a>进入官网和安装入口。</p></div></div><div class="step"><div class="num">2</div><div class="step-body"><p>安装并打开 CC Switch，在工具列表中选择你已经安装的 CLI。</p></div></div><div class="step"><div class="num">3</div><div class="step-body"><p>在供应商页面添加自己的名称、协议、Base URL、模型和 API Key。字段以当前版本界面为准。</p></div></div><div class="step"><div class="num">4</div><div class="step-body"><p>先使用测试功能确认连接，再切换供应商和启动 CLI。</p></div></div><div class="notice"><p>CC Switch 不是中转站，也不提供模型额度。你仍需要官方账号或自己选择的 API 服务商账号。</p></div></section>
 
-    <h3>通过终端安装（需要 Node.js）</h3>
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body"><p>打开 <a href="https://nodejs.org" target="_blank">nodejs.org</a>，下载 LTS 版安装</p></div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body"><p>双击安装，一路下一步</p></div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body"><p>在终端运行：<code>npm install -g @openai/codex</code></p></div>
-    </div>
-  <h2>三、网络配置</h2>
+<section id="plus"><h2>五、使用 Codex++</h2><p>Codex++ 官方 README 将它定义为 OpenAI Codex / ChatGPT 桌面应用的外部启动器与管理工具，不修改官方应用安装目录中的补丁文件。</p><h3>下载安装</h3><p>从 <a href="https://github.com/BigPizzaV3/CodexPlusPlus/releases" target="_blank">Codex++ Releases</a>下载：</p><ul><li>Windows：<code>CodexPlusPlus-*-windows-x64-setup.exe</code></li><li>macOS Intel：<code>CodexPlusPlus-*-macos-x64.dmg</code></li><li>macOS Apple Silicon：<code>CodexPlusPlus-*-macos-arm64.dmg</code></li></ul><p>安装后通常有“Codex++”和“Codex++ 管理工具”两个入口。先打开管理工具确认应用路径和运行状态，再配置供应商，最后从 Codex++ 入口启动。</p><h3>供应商模式</h3><ul><li>官方登录：使用 ChatGPT / Codex 官方账号。</li><li>官方登录 + API：保留官方账号与插件入口，模型请求走兼容 API。</li><li>纯 API：不依赖官方账号，使用自定义 Base URL 和 Key。</li><li>聚合供应商：在多个普通 API 供应商之间路由。</li></ul><p>具体字段必须在 Codex++ 管理工具中配置，不要复制旧版 JSON。官方 README 提到的本地数据位置包括 <code>~/.codex/config.toml</code>、<code>~/.codex/auth.json</code> 和 <code>~/.codex-session-delete/</code>，不要把这些文件上传到 GitHub。</p></section>
 
-    <h3>先装 Watt Toolkit（加速 GitHub 下载）</h3>
-    <p>Watt Toolkit 只能加速 GitHub 访问，<strong>不能加速 OpenAI API</strong>。</p>
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body"><p>打开 <a href="https://steampp.net" target="_blank">steampp.net</a> 下载安装</p></div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body"><p>进入「网络加速」，勾选 <strong>GitHub</strong>，一键加速</p></div>
-    </div>
-    <div class="highlight"><p>🔧 装好后去 GitHub 下载 CC-switch 会快很多。</p></div>
+<section id="deepseek"><h2>六、接入 DeepSeek 等兼容 API</h2><p>DeepSeek 是独立模型/API，在中国大陆通常可以直接访问。它不是 OpenAI Codex 本体。</p><div class="step"><div class="num">1</div><div class="step-body"><p>在 <a href="https://platform.deepseek.com" target="_blank">DeepSeek 官方平台</a>注册并创建 API Key。</p></div></div><div class="step"><div class="num">2</div><div class="step-body"><p>阅读 DeepSeek 当前 API 文档，确认 Base URL、协议和模型名称。</p></div></div><div class="step"><div class="num">3</div><div class="step-body"><p>在 CC Switch 或 Codex++ 中添加自定义供应商，填写服务商要求的字段。</p></div></div><div class="step"><div class="num">4</div><div class="step-body"><p>使用工具内的测试功能验证，再启动 Codex 工作流。</p></div></div><div class="warn"><p>本教程不提供未经对应项目 README 确认的命令、配置键名或配置文件路径。不同工具和版本的配置不能混用，看到网上示例时请回到对应项目的官方发布页核对。</p></div></section>
 
-    <h3>CC-switch：API 路由管理</h3>
-    <p>CC-switch 不提供翻墙，它管理你已有的代理怎么分配流量：哪些 API 走代理、哪些直连。</p>
-    <ul>
-      <li>OpenAI → 走你的代理或中转</li>
-      <li>DeepSeek → 国内直连</li>
-    </ul>
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body"><p>从 <a href="https://github.com/CC-switch/CC-switch/releases" target="_blank">GitHub Release</a> 下载对应版本，解压即用</p></div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body"><p>配置规则文件，指定哪些域名走代理、哪些直连</p></div>
-    </div>
-    <div class="highlight"><p>💡 CC-switch 需要配合已有的代理或中转 API 使用。</p></div>
+<section id="watt"><h2>七、Watt Toolkit 只负责什么</h2><p>Watt Toolkit 官方 README 将它介绍为“开源跨平台的多功能游戏工具箱”，原名 Steam++，大部分功能需要安装 Steam。</p><ul><li>它不是 Codex 的安装前置条件。</li><li>本文只把它作为下载 CC Switch 的可选 GitHub 辅助工具。</li><li>它不是 OpenAI API 加速器。</li><li>它不是 GPT 中转站，也不会提供模型额度。</li><li>如需使用，只应以 <a href="https://github.com/lanyongjia/watt-toolkit/blob/develop/README.md" target="_blank">Watt Toolkit 官方 README</a>和软件界面为准。</li></ul></section>
 
-    <h3>方案 A：通过 GPT 中转 API</h3>
-    <p>找一家 GPT 中转服务商，付费买额度，他们帮你转发请求到 OpenAI。</p>
-    <div class="highlight"><p>💡 拿到中转地址后配置到 Codex：<code>codex config set openai-base-url 你的地址</code></p></div>
+<section id="safe"><h2>八、安全与第一次使用</h2><h3>保护 API Key</h3><ul><li>不要发到聊天群、截图、issue、README 或 Git 仓库。</li><li>泄露后立即在供应商后台撤销并重建。</li><li>中转服务能看到你发给它的请求，重要源码不要交给不信任的服务商。</li></ul><h3>先读后改</h3><p>给 Codex 的第一条任务可以是：</p><div class="code">请先不要修改任何文件。阅读当前项目，告诉我入口文件、主要目录和运行方式。如果需要安装依赖或执行命令，先说明用途并等待我确认。</div><p>更多细节和参考链接见 <a href="README.md">完整版 README</a>。</p></section>
 
-    <h3>方案 B：直接使用 DeepSeek API（推荐）</h3>
-    <p>国产大模型，国内直连，价格是 GPT 的几十分之一。不需要任何代理。</p>
-    <p><strong>具体操作见下一节。</strong></p>
-  <h2>四、接入 DeepSeek API</h2>
-    <p>DeepSeek 是国内的大模型服务商，API 在国内可直接访问，无需任何代理工具。</p>
-
-    <h3>获取 API Key</h3>
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <p>打开 <a href="https://platform.deepseek.com" target="_blank">platform.deepseek.com</a>，注册账号</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <p>进入「API Keys」页面，点击「创建 API Key」</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <p>复制生成的 Key（以 <code>sk-</code> 开头），保存好</p>
-      </div>
-    </div>
-    <div class="highlight">
-      <p>💸 DeepSeek 的价格大约是 GPT 的 1/20，非常便宜。首次注册通常有免费额度。</p>
-    </div>
-
-    <h3>配置 Codex 使用 DeepSeek</h3>
-    <p>在终端中运行以下命令，告诉 Codex 使用 DeepSeek 的接口：</p>
-    <div class="code">codex config set model-provider deepseek<br>codex config set deepseek-api-key sk-你的Key</div>
-    <p>或者直接编辑配置文件 <code>~/.codex/config.json</code>：</p>
-    <div class="code">{
-  "model": {
-    "provider": "deepseek",
-    "deepseek": {
-      "api_key": "sk-你的DeepSeekAPIKey",
-      "model": "deepseek-chat"
-    }
-  }
-}</div>
-    <div class="highlight">
-      <p>✅ 配置完成后，Codex 就会通过 DeepSeek 在国内直连使用，又快又便宜。</p>
-    </div>
-  </section>
-
-  <section id="config">
-    <h2>五、基础配置</h2>
-    <p>Codex 开箱即用，但了解一下这些配置会让体验更好：</p>
-    <div class="grid">
-      <div class="grid-item">
-        <h4>📁 工作目录</h4>
-        <p>Codex 默认在你打开终端的目录下工作。先 cd 到你的项目文件夹再启动。</p>
-      </div>
-      <div class="grid-item">
-        <h4>🌐 代理设置</h4>
-        <p>如果走代理，设置环境变量：<code>set HTTPS_PROXY=http://127.0.0.1:1080</code></p>
-      </div>
-      <div class="grid-item">
-        <h4>🔑 API Key 管理</h4>
-        <p>可配置多组 Key 轮流使用，或设置费用上限防止超支。</p>
-      </div>
-      <div class="grid-item">
-        <h4>🤖 自定义指令</h4>
-        <p>在项目根目录放一个 <code>.codexrules</code> 文件，写入你想要的默认行为。</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="start">
-    <h2>六、第一次使用</h2>
-    <p>安装配置完成后，打开终端，cd 到你的项目目录，输入：</p>
-    <div class="code">codex</div>
-    <p>终端会进入对话模式，你就可以直接告诉 Codex 你想做什么了。比如：</p>
-    <div class="highlight">
-      <p>💬 "帮我创建一个贪吃蛇游戏，HTML 单文件，20×20 网格，支持触屏操作"</p>
-    </div>
-    <p>Codex 会理解你的需求，自动写代码、测试、修改，直到完成。</p>
-    <p>更详细的教程欢迎阅读 <a href="README.md">完整版 README</a>。</p>
-  </section>
-
-  <footer>
-    <p>由 <a href="https://github.com/yanxou">Yanxou</a> 编写 · 使用 Codex 撰写本教程</p>
-  </footer>
+<footer><p>本教程根据 OpenAI Codex 公开文档、CC Switch 官网、Codex++ 官方 README 和 Watt Toolkit 官方 README 整理。版本变化时请以原项目页面为准。</p></footer>
 </div>
 </body>
 </html>
-  <section id="deploy">
-    <h2>七、部署与国内访问</h2>
-    <p>你的小项目做好后，需要部署到线上才能分享给别人。这里有两种方案：</p>
-
-    <h3>方案 A：Vercel（国际用户推荐）</h3>
-    <p>本项目的默认部署平台。速度快、配置简单，但<strong>国内部分地区访问不稳定</strong>。</p>
-
-    <h3>方案 B：GitHub Pages（国内用户推荐）</h3>
-    <p>GitHub 提供的免费静态托管，国内访问比 Vercel 更稳定。</p>
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <p>打开你的 GitHub 仓库 <strong>Settings → Pages</strong></p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <p>在「Source」处选择 <strong>GitHub Actions</strong></p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <p>推送到 <code>main</code> 分支后，仓库中已配好的 <code>.github/workflows/deploy-pages.yml</code> 会自动构建并部署</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body">
-        <p>部署完成后访问 <code>https://yanxou.github.io/Code/</code> 即可</p>
-      </div>
-    </div>
-    <div class="highlight">
-      <p>💡 GitHub Pages 国内直连，不需要任何工具。访问速度取决于当地网络，通常比 Vercel 流畅。</p>
-    </div>
-  </section>
-  </section>
