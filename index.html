@@ -1,124 +1,50 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Yanxou · 个人小站</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f5ef">
+<meta name="description" content="指浪诀：把常用、好玩、有趣的互联网入口收在一起。">
+<title>指浪诀 · 个人网络收藏</title>
 <style>
-:root{
-  --bg:#faf9f6;--card:#fff;--fg:#1a1a2e;--mute:#8888a0;
-  --border:#e8e6e0;--accent:#2d9f8b;--accent-soft:#e6f5f1;
-  --radius:12px;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04)
-}
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  background:var(--bg);color:var(--fg);
-  font-family:'Inter','Noto Sans SC',system-ui,-apple-system,sans-serif;
-  -webkit-font-smoothing:antialiased;line-height:1.6
-}
-.container{max-width:620px;margin:0 auto;padding:48px 20px 64px}
-header{text-align:center;margin-bottom:48px}
-.avatar{
-  width:72px;height:72px;border-radius:50%;margin:0 auto 16px;
-  background:var(--accent-soft);color:var(--accent);
-  font-size:32px;display:flex;align-items:center;justify-content:center
-}
-h1{font-size:26px;font-weight:600;letter-spacing:-.02em}
-.tagline{color:var(--mute);font-size:14px;margin-top:4px}
-.bio{
-  color:var(--mute);font-size:14px;max-width:440px;margin:16px auto 0;
-  line-height:1.7
-}
-section{margin-bottom:40px}
-section h2{
-  font-size:14px;font-weight:600;text-transform:uppercase;
-  letter-spacing:.06em;color:var(--mute);margin-bottom:16px
-}
-.project-grid{display:flex;flex-direction:column;gap:12px}
-.project-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius);padding:18px 20px;
-  display:flex;align-items:center;gap:14px;
-  text-decoration:none;color:inherit;
-  box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s
-}
-.project-card:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(45,159,139,.1)}
-.project-icon{font-size:28px;flex-shrink:0;width:44px;text-align:center}
-.project-info h3{font-size:15px;font-weight:500}
-.project-info p{font-size:13px;color:var(--mute);margin-top:2px}
-.project-tag{
-  display:inline-block;font-size:11px;font-weight:500;
-  color:var(--accent);background:var(--accent-soft);
-  padding:2px 8px;border-radius:4px;margin-top:5px
-}
-.post-list{display:flex;flex-direction:column;gap:10px}
-.post-item{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius);padding:16px 20px;
-  text-decoration:none;color:inherit;
-  box-shadow:var(--shadow);transition:border-color .15s
-}
-.post-item:hover{border-color:var(--accent)}
-.post-item h3{font-size:14px;font-weight:500}
-.post-item .meta{font-size:12px;color:var(--mute);margin-top:4px}
-footer{text-align:center;padding-top:16px;border-top:1px solid var(--border)}
-footer a{color:var(--mute);text-decoration:none;font-size:13px;margin:0 10px}
-footer a:hover{color:var(--accent)}
-@media(max-width:480px){
-  .container{padding:32px 16px 48px}
-  h1{font-size:22px}
-  .avatar{width:64px;height:64px;font-size:28px}
-  .project-card{padding:14px 16px}
-  .post-item{padding:14px 16px}
-}
+:root{--paper:#f7f5ef;--ink:#20242a;--muted:#737a78;--line:#dedbd1;--card:#fffdf8;--green:#427d68;--green-soft:#e5efe8;--orange:#c8794e;--shadow:0 8px 24px rgba(46,48,38,.06)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:ui-rounded,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.shell{width:min(1180px,calc(100% - 32px));margin:0 auto}
+.site-header{padding:28px 0 18px;border-bottom:1px solid var(--line)}
+.header-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}.mark{width:42px;height:42px;border-radius:14px;background:var(--green);color:#fff;display:grid;place-items:center;font-size:21px;box-shadow:0 5px 12px rgba(66,125,104,.2)}
+.brand h1{font-family:Georgia,"Times New Roman",serif;font-size:26px;letter-spacing:.06em;font-weight:500}.brand p{font-size:12px;color:var(--muted);margin-top:1px}
+.header-link{font-size:13px;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:3px}.header-link:hover{color:var(--green);border-color:var(--green)}
+.hero{padding:42px 0 32px;display:grid;grid-template-columns:1fr minmax(280px,420px);gap:48px;align-items:end}.eyebrow{color:var(--green);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:13px}.hero h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(34px,5vw,58px);line-height:1.08;font-weight:500;letter-spacing:.01em;max-width:600px}.hero h2 em{color:var(--orange);font-style:normal}.hero-copy{color:var(--muted);font-size:15px;max-width:430px}.hero-copy strong{color:var(--ink);font-weight:500}
+.search-wrap{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:7px;box-shadow:var(--shadow);display:flex;align-items:center;gap:8px}.search-icon{font-size:20px;padding:0 8px;color:var(--muted)}#search{border:0;outline:0;background:transparent;width:100%;font:inherit;color:var(--ink);font-size:15px;padding:10px 0}#search::placeholder{color:#a5aaa4}.clear{border:0;background:var(--green-soft);color:var(--green);border-radius:10px;padding:8px 10px;cursor:pointer;font-size:12px;display:none}.clear.visible{display:block}
+.main-grid{display:grid;grid-template-columns:220px 1fr;gap:34px;align-items:start;padding-bottom:70px}.sidebar{position:sticky;top:18px}.sidebar-title{font-size:12px;color:var(--muted);letter-spacing:.12em;margin-bottom:12px}.category-list{display:flex;flex-direction:column;gap:2px}.category-button{border:0;background:transparent;color:var(--muted);font:inherit;font-size:14px;text-align:left;border-radius:8px;padding:7px 10px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}.category-button:hover,.category-button.active{background:var(--green-soft);color:var(--green)}.category-button span:last-child{font-size:11px;opacity:.6}
+.content-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:15px}.content-head h3{font-family:Georgia,"Times New Roman",serif;font-size:24px;font-weight:500}.result-count{font-size:12px;color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.site-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px;min-height:108px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .18s,box-shadow .18s,border-color .18s}.site-card:hover{transform:translateY(-2px);border-color:#b9d4c5;box-shadow:var(--shadow)}.site-name{font-size:15px;font-weight:600;display:flex;gap:8px;align-items:center}.site-name::before{content:"↗";color:var(--orange);font-size:14px;font-weight:400}.site-desc{color:var(--muted);font-size:12px;line-height:1.55;margin-top:7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.site-category{font-size:11px;color:var(--green);margin-top:11px}.empty{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:34px 20px;text-align:center;color:var(--muted);display:none}.empty.show{display:block}.empty strong{display:block;color:var(--ink);font-family:Georgia,serif;font-size:20px;font-weight:500;margin-bottom:5px}
+.site-footer{border-top:1px solid var(--line);padding:20px 0 30px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:12px}.site-footer a:hover{color:var(--green)}
+@media(max-width:780px){.hero{grid-template-columns:1fr;gap:22px;padding-top:30px}.main-grid{grid-template-columns:1fr;gap:22px}.sidebar{position:static}.category-list{flex-direction:row;overflow:auto;padding-bottom:4px;scrollbar-width:none}.category-list::-webkit-scrollbar{display:none}.category-button{white-space:nowrap;background:var(--card);border:1px solid var(--line);padding:7px 11px}.category-button.active{border-color:#b9d4c5}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){.shell{width:min(100% - 24px,1180px)}.site-header{padding-top:19px}.brand h1{font-size:23px}.mark{width:38px;height:38px;border-radius:12px}.header-link{font-size:12px}.hero h2{font-size:38px}.hero-copy{font-size:14px}.cards{grid-template-columns:1fr;gap:9px}.site-card{min-height:96px;padding:14px}.site-footer{display:block}.site-footer span{display:block;margin-bottom:4px}}
 </style>
 </head>
 <body>
-<div class="container">
-  <header>
-    <div class="avatar">🐧</div>
-    <h1>Yanxou</h1>
-    <p class="tagline">写写代码，折腾点好玩的东西</p>
-    <p class="bio">一个自学编程的开发者，喜欢做小游戏和小工具。<br>这里记录我折腾过的东西。</p>
-  </header>
-
-  <section>
-    <h2>项目</h2>
-    <div class="project-grid">
-      <a href="snake-game/" class="project-card">
-        <div class="project-icon">🐍</div>
-        <div class="project-info">
-          <h3>贪吃蛇</h3>
-          <p>20×20 网格，渐变蛇身，脉冲食物，手机 D-pad 触控</p>
-          <span class="project-tag">Canvas 经典</span>
-        </div>
-      </a>
-      <a href="codex-tutorial/demo/" class="project-card">
-        <div class="project-icon">🃏</div>
-        <div class="project-info">
-          <h3>记忆翻牌</h3>
-          <p>8 对 Emoji 配对，翻牌动画，计时计步</p>
-          <span class="project-tag">Codex 演示</span>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <section>
-    <h2>文章</h2>
-    <div class="post-list">
-      <a href="codex-tutorial/" class="post-item">
-        <h3>Codex 完全入门指南</h3>
-        <p class="meta">从安装到实战 · 面向国内开发者</p>
-      </a>
-    </div>
-  </section>
-
-  <footer>
-    <a href="https://github.com/yanxou">GitHub</a>
-  </footer>
-</div>
+<header class="site-header"><div class="shell header-row"><a class="brand" href="."><span class="mark">指</span><span><h1>指浪诀</h1><p>个人网络收藏 · 随手一指，去看点有意思的</p></span></a><a class="header-link" href="https://link.pixcat.cn" target="_blank" rel="noreferrer">收藏来源 ↗</a></div></header>
+<main class="shell">
+<section class="hero"><div><p class="eyebrow">A small corner of the web</p><h2>把互联网里<br><em>好玩的入口</em>收好。</h2><p class="hero-copy"><strong>指浪诀</strong> 是我的个人网络收藏夹。工具、灵感、资源、游戏和一些说不清但值得点开的东西，都在这里。</p></div><div class="search-wrap"><span class="search-icon">⌕</span><input id="search" type="search" placeholder="搜索网站、分类或关键词" autocomplete="off"><button id="clear" class="clear" type="button">清除</button></div></section>
+<div class="main-grid"><aside class="sidebar"><p class="sidebar-title">分类浏览</p><nav id="categories" class="category-list" aria-label="网站分类"></nav></aside><section><div class="content-head"><h3 id="heading">精选入口</h3><p id="count" class="result-count"></p></div><div id="cards" class="cards"></div><div id="empty" class="empty"><strong>没有找到这个入口</strong><span>换个关键词，或从左侧挑一个分类看看。</span></div></section></div>
+</main>
+<footer class="site-footer shell"><span>指浪诀 · 把常用的留在手边</span><a href="https://link.pixcat.cn" target="_blank" rel="noreferrer">部分收藏整理自 link.pixcat.cn ↗</a></footer>
+<script>
+const state={groups:[],category:'全部',query:''};
+const els={categories:document.querySelector('#categories'),cards:document.querySelector('#cards'),heading:document.querySelector('#heading'),count:document.querySelector('#count'),empty:document.querySelector('#empty'),search:document.querySelector('#search'),clear:document.querySelector('#clear')};
+const featured=['效率工具','媒体工具','检索工具','视觉资源','游戏资源','学习资源','好站收藏','博客收藏','有趣收藏'];
+function totalSites(){return state.groups.reduce((n,g)=>n+g.sites.length,0)}
+function renderCategories(){const all=[{category:'全部',sites:Array(totalSites())},...state.groups];els.categories.innerHTML=all.map(g=>`<button class="category-button ${state.category===g.category?'active':''}" data-category="${escapeAttr(g.category)}"><span>${escapeHtml(g.category)}</span><span>${g.sites.length}</span></button>`).join('')}
+function currentSites(){let groups=state.groups.filter(g=>state.category==='全部'||g.category===state.category);let sites=groups.flatMap(g=>g.sites.map(s=>({...s,category:g.category})));const q=state.query.trim().toLowerCase();if(q)sites=sites.filter(s=>`${s.name} ${s.desc} ${s.category}`.toLowerCase().includes(q));return sites}
+function render(){const sites=currentSites();els.heading.textContent=state.query?`搜索：${state.query}`:state.category==='全部'?'精选入口':state.category;els.count.textContent=`${sites.length} 个入口`;els.cards.innerHTML=sites.map(s=>`<a class="site-card" href="${escapeAttr(s.href)}" target="_blank" rel="noopener noreferrer"><span><span class="site-name">${escapeHtml(s.name)}</span><span class="site-desc">${escapeHtml(s.desc||'实用有趣的网站')}</span></span><span class="site-category">${escapeHtml(s.category)}</span></a>`).join('');els.empty.classList.toggle('show',sites.length===0);els.cards.style.display=sites.length?'grid':'none';renderCategories()}
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function escapeAttr(v){return escapeHtml(v)}
+els.categories.addEventListener('click',e=>{const b=e.target.closest('[data-category]');if(!b)return;state.category=b.dataset.category;state.query='';els.search.value='';els.clear.classList.remove('visible');render();window.scrollTo({top:document.querySelector('.main-grid').offsetTop-12,behavior:'smooth'})});els.search.addEventListener('input',e=>{state.query=e.target.value;state.category='全部';els.clear.classList.toggle('visible',Boolean(state.query));render()});els.clear.addEventListener('click',()=>{state.query='';els.search.value='';els.clear.classList.remove('visible');render();els.search.focus()});
+fetch('./bookmarks.json').then(r=>{if(!r.ok)throw new Error('load failed');return r.json()}).then(data=>{state.groups=data;render()}).catch(()=>{els.heading.textContent='暂时无法加载收藏';els.count.textContent='请刷新页面重试';els.empty.classList.add('show');els.empty.querySelector('span').textContent='收藏数据加载失败，请稍后刷新。'});
+</script>
 </body>
 </html>
