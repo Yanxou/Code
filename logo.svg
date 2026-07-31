@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="指浪诀">
+  <defs>
+    <linearGradient id="wave" x1="12" y1="10" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#427d68"/>
+      <stop offset="1" stop-color="#c8794e"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#fffdf8"/>
+  <path d="M14 39c7-10 14-10 22 0 5 6 10 7 15 3" fill="none" stroke="url(#wave)" stroke-width="5" stroke-linecap="round"/>
+  <path d="M25 16h15M32 16v31M23 28h18" fill="none" stroke="#20242a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="47" cy="21" r="4" fill="#c8794e"/>
+</svg>

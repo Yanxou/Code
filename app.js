@@ -34,11 +34,12 @@ function currentSites() {
 
 function render() {
   const sites = currentSites();
-  els.heading.textContent = state.query ? `搜索：${state.query}` : state.category === '全部' ? '精选入口' : state.category;
+  els.heading.textContent = state.query ? `搜索：${state.query}` : state.category === '全部' ? '收藏列表' : state.category;
   els.count.textContent = `${sites.length} 个入口`;
   els.mobileHint.textContent = sites.length > 24 ? '当前分类内容较多，建议用搜索框继续缩小范围。' : '';
   els.mobileHint.classList.toggle('show', sites.length > 24);
-  els.cards.innerHTML = sites.map(site => `<a class="site-card" href="${escapeAttr(site.href)}" target="_blank" rel="noopener noreferrer"><span><span class="site-name">${escapeHtml(site.name)}</span><span class="site-desc">${escapeHtml(site.desc || '实用有趣的网站')}</span></span><span class="site-category">${escapeHtml(site.category)}</span></a>`).join('');
+  const showCategory = state.category === '全部' || Boolean(state.query);
+  els.cards.innerHTML = sites.map(site => `<a class="site-card" href="${escapeAttr(site.href)}" target="_blank" rel="noopener noreferrer"><span><span class="site-name">${escapeHtml(site.name)}</span><span class="site-desc">${escapeHtml(site.desc || '实用有趣的网站')}</span></span>${showCategory ? `<span class="site-category">${escapeHtml(site.category)}</span>` : ''}</a>`).join('');
   els.empty.classList.toggle('show', sites.length === 0);
   els.cards.style.display = sites.length ? 'grid' : 'none';
   renderCategories();
@@ -136,7 +137,7 @@ function layoutGestureMenu(x, y, side) {
     const itemY = centerY + Math.sin(angle) * radius;
     item.style.left = `${Math.min(Math.max(itemX, 44), window.innerWidth - 44)}px`;
     item.style.top = `${Math.min(Math.max(itemY, 44), window.innerHeight - 44)}px`;
-    item.classList.toggle('active', item.dataset.category === state.category);
+    item.classList.toggle('current', item.dataset.category === state.category);
   });
 }
 
@@ -157,7 +158,7 @@ function updateGestureTarget(x, y) {
   let bestDistance = Infinity;
   items.forEach(item => {
     const rect = item.getBoundingClientRect();
-    const hit = x >= rect.left - 12 && x <= rect.right + 12 && y >= rect.top - 12 && y <= rect.bottom + 12;
+    const hit = x >= rect.left - 22 && x <= rect.right + 22 && y >= rect.top - 22 && y <= rect.bottom + 22;
     const distance = Math.hypot(x - (rect.left + rect.width / 2), y - (rect.top + rect.height / 2));
     if (hit && distance < bestDistance) {
       best = item;
@@ -181,6 +182,12 @@ window.addEventListener('pointermove', event => {
   const inward = gesture.side === 'left' ? dx : -dx;
   if (!gesture.open && inward > 14 && dy > -18) openGestureMenu(event.clientX, event.clientY, gesture.side);
   if (gesture.open) updateGestureTarget(event.clientX, event.clientY);
+}, { passive: false });
+window.addEventListener('touchmove', event => {
+  if (!gesture.tracking) return;
+  event.preventDefault();
+  const touch = event.touches[0];
+  if (touch && gesture.open) updateGestureTarget(touch.clientX, touch.clientY);
 }, { passive: false });
 window.addEventListener('pointerup', () => gesture.open ? closeGestureMenu(true) : gesture.tracking = false);
 window.addEventListener('pointercancel', () => {
